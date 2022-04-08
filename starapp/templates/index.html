@@ -1,0 +1,426 @@
+{% extends 'base.html' %}
+{% block title %}Main{% endblock %}
+{% block content %}
+            <div class="col-lg-3 col-xl-3 col-md-2"></div>
+            <div class="col-md-8 col-lg-6 col-xl-6">
+                <div class="card">
+                        <h4 class="card-header text-center">
+                            Search:
+                        </h4>
+                        <ul class="nav nav-tabs">
+                            <li style="width: 50%;" class="nav-item text-center">
+                                <a class="nav-link active" aria-current="page" id="constellation_search">Constellation</a>
+                            </li>
+                            <li style="width: 50%;" class="nav-item text-center">
+                                <a class="nav-link" id="points_search">Points</a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <h5 id="search_title" class="card-title">Search with constellation:</h5>
+                            <p id="search_description" class="card-text">
+                                Input tag of constellation (for example ori (Orion)) and we will see the statistics about this constellation!
+                            </p>
+                            <form class="input-group">
+                                <input class="form-control" type="text" id="constellation_input" placeholder="Constellation">
+                                <input class="form-control" type="hidden" id="ra_input" placeholder="Ra">
+                                <input class="form-control" type="hidden" id="dec_input" placeholder="Dec">
+                                <button class="btn btn-primary" type="button" id="search_constellation_button">Search</button>
+                            </form>
+                            <div id="points">
+
+                            </div>
+                            <form class="w-100 input-group d-flex justify-content-end">
+                                <button class="btn btn-danger" type="button" id="clear_points">Clear</button>
+                                <button class="btn btn-primary" type="button" id="search_points_button">Search</button>
+                            </form>
+                            <div class="text-center">
+                                <span class="text-danger" id="error"></span>
+                            </div>
+                        </div>
+                </div>
+                <div class="card text-center" id="search_statistics">
+                        <h4 class="card-header text-center">
+                            Search statistics:
+                        </h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <span class="lead">Number of stars:</span>
+                                <span class="lead" id="number_of_stars"></span>
+                            </div>
+                                    <span class="lead">By catalogs:</span>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <th class="text-center">Catalog (tag):</th>
+                                            <th class="text-center">Percentage:</th>
+                                        </thead>
+                                        <tbody id="catalogs">
+
+                                        </tbody>
+                                    </table>
+                                    <span class="lead">By constellations:</span>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <th class="text-center">Constellation (tag):</th>
+                                            <th class="text-center">Percentage:</th>
+                                        </thead>
+                                        <tbody id="constellations">
+        
+                                        </tbody>
+                                    </table>
+                                    <span class="lead">By spects:</span>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <th class="text-center">Spect:</th>
+                                            <th class="text-center">Percentage:</th>
+                                        </thead>
+                                        <tbody id="spects">
+        
+                                        </tbody>
+                                    </table>
+                        </div>
+                </div>
+                <div class="card" id="search_actions">
+                        <h4 class="card-header text-center">
+                            Search actions:
+                        </h4>
+                        <ul class="nav nav-tabs">
+                            <li style="width: 33.33333%;" class="nav-item">
+                                <a class="nav-link active" aria-current="page" id="distance">By distance</a>
+                            </li>
+                            <li style="width: 33.33333%;" class="nav-item">
+                                <a class="nav-link" id="apparent_magnitude">By apparent magnitude</a>
+                            </li>
+                            <li style="width: 33.33333%;" class="nav-item">
+                                <a class="nav-link" id="absolute_magnitude">By absolute magnitude</a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <form id="form-search" style="width: 100%;" class="text-center">
+                                <div class="input-group d-flex justify-content-center">
+                                    <div class="col-auto">
+                                        <input id="minimum_input" value="0" type="number" min="0" max="100000" class="form-control">
+                                    </div>
+                                    <div class="col-auto">
+                                        <input id="maximum_input" value="0" type="number" min="0" max="100000" class="form-control">
+                                        <input type="hidden" id="type" value="dist">
+                                    </div>
+                                </div>
+                                <p>Number of stars: <span id="segment_number_of_stars">-</span></p>
+                                <p>Maximum element: <span id="maximum">-</span></p>
+                                <p>Minimum element: <span id="minimum">-</span></p>
+                            </form>
+                            <form class="input-group">
+                                <select id="descending" class="form-select">
+                                    <option value="0" selected>Ascending</option>
+                                    <option value="1">Descending</option>
+                                </select>
+                                <button class="btn btn-primary" type="button" id="sort_search" style="width:15%">Sort</button>
+                            </form>
+                            <table id="sort_table" class="table table-striped table-bordered">
+                                <thead>
+                                    <th class="text-center">Star name:</th>
+                                    <th class="text-center" id="sort_thead_type"></th>
+                                </thead>
+                                <tbody id="sort_result">
+                                </tbody>
+                            </table>
+                            <form class="d-flex justify-content-center">
+                                <input id="next_page_input" type="hidden" value="2">
+                                <button id="new_page_button" class="btn btn-primary" type="button">Show more</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xl-3 col-md-2"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+        let constellation_search = document.getElementById("constellation_search"),
+            points_search = document.getElementById("points_search"),
+            points = document.getElementById("points"),
+            search_statistics = document.getElementById("search_statistics"),
+            search_actions = document.getElementById("search_actions"),
+            constellation_input = document.getElementById("constellation_input"),
+            ra_input = document.getElementById("ra_input"),
+            dec_input = document.getElementById("dec_input"),
+            add_points_button = null,
+            search_constellation_button = document.getElementById("search_constellation_button"),
+            clear_points = document.getElementById("clear_points"),
+            search_points_button = document.getElementById("search_points_button"),
+            number_of_sort_elements = 0;
+        
+        clear_points.style.display = "none";
+        search_points_button.style.display = "none";
+        search_statistics.style.display = "none";
+        search_actions.style.display = "none";
+        points.style.display = "none";
+        onclick_function();
+    
+        constellation_search.onclick = function(){
+            points_search.classList.remove("active");
+            constellation_search.classList.add("active");
+            document.getElementById("search_title").innerText = "Search with constellation:";
+            document.getElementById("search_description").innerText = "Input tag of constellation (for example ori (Orion)) and we will see the statistics about this constellation!";
+            
+            constellation_input.setAttribute("type", "text");
+            ra_input.setAttribute("type", "hidden");
+            dec_input.setAttribute("type", "hidden");
+            
+            add_points_button = document.getElementById("add_points_button");
+            if(add_points_button != null){
+                search_constellation_button = add_points_button;
+                add_points_button.id = "search_constellation_button";
+                add_points_button = null;
+                document.getElementById("search_constellation_button").innerText = "Search";
+                points.style.display = "none";
+                clear_points.style.display = "none";
+                search_points_button.style.display = "none";
+                onclick_function();
+            }
+        };
+
+        points_search.onclick = function(){
+            constellation_search.classList.remove("active");
+            points_search.classList.add("active");
+            points.style.display = "block";
+            if(points.innerText != ''){
+                clear_points.style.display = "block";
+                search_points_button.style.display = "block";
+            }
+            document.getElementById("search_title").innerText = "Search with points:";
+            document.getElementById("search_description").innerText = "Add points and the server will build a convex polygon for these points. We will see statistics about stars in the polygon."
+            
+            constellation_input.setAttribute("type", "hidden");
+            ra_input.setAttribute("type", "text");
+            dec_input.setAttribute("type", "text");
+
+            search_constellation_button = document.getElementById("search_constellation_button");
+            if (search_constellation_button != null){
+                add_points_button = search_constellation_button;
+                search_constellation_button.id = "add_points_button";
+                search_constellation_button = null;
+                document.getElementById("add_points_button").innerText = "Add";
+                onclick_function();
+            }
+        };
+
+        function show_search_result(search_result){
+            if(search_result.error != null){
+                document.getElementById("error").innerText = search_result.error;
+            }
+            else {
+                search_statistics.style.display = "flex";
+                        search_actions.style.display = "flex";
+                        let number_of_stars = document.getElementById("number_of_stars"),
+                            catalogs = document.getElementById("catalogs"),
+                            constellations = document.getElementById("constellations"),
+                            spects = document.getElementById("spects");
+                        
+                        function insert_data_in_a_table(table, data, field) {
+                            let html_result = '';
+                            data.forEach(row => {html_result += '<tr><td class="w-25 text-center">' + row[field] + '</td><td class="w-75 text-center">' + row['percentage'] + '%</td></tr>'})
+                            table.innerHTML = html_result;
+                        };
+                        number_of_stars.innerText = search_result.number_of_stars;
+                        insert_data_in_a_table(catalogs, search_result.catalogs, 'tag');
+                        insert_data_in_a_table(constellations, search_result.constellations, 'tag');
+                        insert_data_in_a_table(spects, search_result.spects, 'spect');
+            let distance = document.getElementById("distance"),
+            apparent_magnitude = document.getElementById("apparent_magnitude"),
+            absolute_magnitude = document.getElementById("absolute_magnitude"),
+            minimum_input = document.getElementById("minimum_input"),
+            maximum_input = document.getElementById("maximum_input"),
+            type_input = document.getElementById("type"),
+            sort_table = document.getElementById("sort_table"),
+            sort_search = document.getElementById("sort_search"),
+            sort_result = document.getElementById("sort_result"),
+            new_page_button = document.getElementById("new_page_button");
+
+        sort_table.style.display = "none";
+        new_page_button.style.display = "none";
+        distance.onclick = function(){
+                distance.classList.add("active");
+                apparent_magnitude.classList.remove("active");
+                absolute_magnitude.classList.remove("active");
+                minimum_input.setAttribute("min", "0");
+                minimum_input.setAttribute("max", "100000");
+                maximum_input.setAttribute("min", "0");
+                maximum_input.setAttribute("max", "100000");
+                type_input.setAttribute("value", "dist");
+        };
+
+        apparent_magnitude.onclick = function(){
+                distance.classList.remove("active");
+                apparent_magnitude.classList.add("active");
+                absolute_magnitude.classList.remove("active");
+                minimum_input.setAttribute("min", "-26.7");
+                minimum_input.setAttribute("max", "21");
+                maximum_input.setAttribute("min", "-26.7");
+                maximum_input.setAttribute("max", "21");
+                type_input.setAttribute("value", "mag");
+        };
+
+        absolute_magnitude.onclick = function(){
+                distance.classList.remove("active");
+                apparent_magnitude.classList.remove("active");
+                absolute_magnitude.classList.add("active");
+                minimum_input.setAttribute("min", "-16.68");
+                minimum_input.setAttribute("max", "19.629");
+                maximum_input.setAttribute("min", "-16.68");
+                maximum_input.setAttribute("max", "19.629");
+                type_input.setAttribute("value", "absmag");
+        };
+    }
+        };
+
+        function onclick_function(){
+            if(add_points_button != null){
+                let points = document.getElementById("points"),
+                    search_points_button = document.getElementById("search_points_button"),
+                    clear_points = document.getElementById("clear_points"),
+                    points_array = [];
+                function buttons_onclick(){
+                    clear_points.onclick = function(){
+                        clear_points.style.display = "none";
+                        search_points_button.style.display = "none";
+                        points.innerHTML = '';
+                        points_array = [];
+                    };
+                    search_points_button.onclick = function(){
+                        fetch("{{url_for('views.get_data_with_points')}}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(points_array)
+                        }).then(response => response.json())
+                        .then(search_result => show_search_result(search_result))
+                    }
+                }
+                add_points_button.onclick = function(){
+                    if(points.innerText == ''){
+                        clear_points.style.display = "block";
+                        search_points_button.style.display = "block";
+                        buttons_onclick()
+                    }
+                    let ra = document.getElementById("ra_input").value,
+                        dec = document.getElementById("dec_input").value;
+                    points_array.push({"ra": parseFloat(ra), "dec": parseFloat(dec)})
+                    points.insertAdjacentHTML('afterbegin', '<div><span>Ra: ' + ra + ' </span><span>Dec: ' + dec + '</span></div>')
+                };
+            }
+
+            if(search_constellation_button != null){
+                search_constellation_button.onclick = function(){
+                    fetch("{{url_for('views.get_data_from_constellation')}}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'tag': document.getElementById('constellation_input').value,
+                        })
+                    }).then(
+                        response => response.json()
+                    ).then(search_result => show_search_result(search_result));
+                };
+            }
+        }
+
+            function segment_search(){
+                fetch("{{url_for('views.segment_search')}}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'type': document.getElementById('type').value,
+                        'minimum': parseFloat(document.getElementById('minimum_input').value),
+                        'maximum': parseFloat(document.getElementById('maximum_input').value)
+                    })
+                }).then(response => response.json())
+                .then((search_result) => {
+                    let minimum = document.getElementById("minimum"),
+                        maximum = document.getElementById("maximum");
+                    if (search_result.minimum != "-") {
+                        minimum.innerText = search_result.minimum.name + ' (' + search_result.minimum.value + ')';
+                        maximum.innerText = search_result.maximum.name + ' (' + search_result.maximum.value + ')';
+                    } else {
+                        minimum.innerText = "-";
+                        maximum.innerText = "-";
+                    }
+                    number_of_sort_elements = parseInt(search_result.sum);
+                    document.getElementById("segment_number_of_stars").innerText = search_result.sum;
+                });
+            };
+
+            minimum_input.onchange = function(){
+                if(!this.value){
+                    this.value = 0;
+                }
+                segment_search();
+            };
+
+            maximum_input.onchange = function(){
+                if(!this.value){
+                    this.value = 0;
+                }
+                segment_search();
+            };
+
+            function load_sort_result_by_page(page){
+                fetch("{{url_for('views.sort_search')}}", {
+                    method: 'POST',
+                    headers: {
+                            'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'page': page,
+                        'descending': document.getElementById("descending").value,
+                        'type': type.value
+                    })
+                }).then(response => response.json())
+                .then((search_result) => {
+                    let html_sort_result = '';
+                    search_result.forEach(row => {html_sort_result += '<tr><td class="w-25 text-center">' + row.name + '</td><td class="w-75 text-center">' + row.value + '</td></tr>'});
+                    if(page == 1) {
+                        sort_result.innerHTML = html_sort_result;
+                    } else {
+                        sort_result.innerHTML += html_sort_result;
+                    }
+                });
+            }
+            function return_name_of_thead_type(type){
+                switch(type){
+                    case 'dist':
+                        return 'Distance:'
+                    case 'mag':
+                        return 'Apparent magnitude:'
+                    case 'absmag':
+                        return 'Absolute magnitude:'
+                };
+            };
+            sort_search.onclick = function(){
+                let type = document.getElementById("type"),
+                    sort_result = document.getElementById("sort_result");
+                sort_table.style.display = "table";
+                if (number_of_sort_elements > 10) {
+                    new_page_button.style.display = "block";
+                    next_page_input.setAttribute("value", 2);
+                }
+                document.getElementById("sort_thead_type").innerText = return_name_of_thead_type(type.value);
+                load_sort_result_by_page(1);
+            };
+            new_page_button.onclick = function(){
+                let next_page_input = document.getElementById("next_page_input"),
+                    next_page = parseInt(next_page_input.value);
+                if (number_of_sort_elements - next_page * 10 < 10) {
+                    new_page_button.style.display = "none";
+                }
+                load_sort_result_by_page(next_page);
+                next_page++;
+                next_page_input.setAttribute("value", next_page);
+            };
+            window.onbeforeunload = () => fetch("{{url_for('views.delete_all')}}");
+        });
+    </script>
+{% endblock %}

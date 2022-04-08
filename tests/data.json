@@ -1,0 +1,1220 @@
+{
+    "data_from_hygdata": 
+    {
+        "id": [45408, 43960, 9861, 73034, 59341, 17628, 32263, 75310, 112594, 59120, 93819], 
+        "hip": [45539, 44087, 9884, 73261, 59523, 17670, 32349, 75539, 112954, 59302, 94114], 
+        "hd": [79745, null, 12929, 132563, 106126, 23644, 48915, 138301, null, null, 178253], 
+        "hr": [null, null, 617, null, null, null, 2491, null, null, null, 7254], 
+        "gl": [null, null, "Gl84.3", null, null, null, "Gl244A", null, null, null, null], 
+        "bf": [null, null, "13AlpAri", null, null, null, "9AlpCMa", null, null, null, "Alp CrA"], 
+        "proper": [null, null, "Hamal", null, null, null, "Sirius", null, null, null, null], 
+        "ra": [9.281838, 8.980159, 2.119555, 14.972648, 12.206717, 3.784327, 6.752481, 15.432399, 22.876376, 12.166283, 19.157869], 
+        "dec": [35.149117, 30.467122, 23.462423, 44.043147, 73.724481, 8.954889, -16.716116, 71.339695, -45.881164, -40.295177, -37.904474], 
+        "dist": [179.2115, 465.1163, 20.1776, 96.0615, 193.0502, 133.8688, 2.6371, 240.3846, 123.3046, 109.1703, 38.4320], 
+        "pmra": [-30.59, -28.11, 190.73, -57.47, -23.13, -32.56, -546.01, -8.89, 3.00, -224.74, 85.73], 
+        "pmdec": [-12.00, 7.16, -145.77, -69.27, 4.75, 26.93, -1223.08, 45.57, -21.57, -4.53, -96.65], 
+        "rv": [0.0, 0.0, -14.4, 0.0, 0.0, 0.0, -9.4, 0.0, 0.0, 0.0, -18.0], 
+        "mag": [8.640, 8.850, 2.010, 8.450, 8.930, 7.120, -1.440, 7.700, 10.300, 10.120, 4.110], 
+        "absmag": [2.373, 0.512, 0.486, 3.537, 2.502, 1.487, 1.454, 0.795, 4.845, 4.929, 1.187], 
+        "spect": ["F2", "K0", "K2III", "F8...", "F5", "G5", "A0m...", "K0", "G0", null, "A0/A1V"], 
+        "ci": [0.312, 0.880, 1.151, 0.560, 0.448, 1.204, 0.009, 1.026, 0.680, 0.758, 0.042], 
+        "x": [-110.971117, -281.997931, 15.731986, -49.174566, -54.024386, 72.475941, -0.494323, -47.894033, 82.151154, -83.187798, 9.052029], 
+        "y": [95.694628, 284.942966, 9.751722, -48.475210, -2.926429, 110.606911, 2.476731, -60.180718, -24.887969, -3.623443, -28.941534], 
+        "z": [103.173208, 235.834360, 8.033610, 66.781942, 185.313738, 20.837585, -0.758485, 227.748104, -88.520062, -70.603225, -23.610478], 
+        "vx": [0.00001281, 0.00005081, -0.00001649, -0.00003476, 0.00000309, 0.00001618, 0.00000953, 0.00002322, -0.00000834, -0.00000363, 0.00000761], 
+        "vy": [0.00002405, 0.00003877, 0.00001173, 0.00000332, 0.00002185, -0.00001386, -0.00001207, 0.00004582, 0.00000440, 0.00011889, 0.00002919], 
+        "vz": [-0.00000852, 0.00001391, -0.00001894, -0.00002319, 0.00000125, 0.00001726, -0.00001221, 0.00001699, -0.00000898, -0.00000183, -0.00000290], 
+        "rarad": [2.4299794123355825, 2.351000121540151, 0.554898130994913, 3.919830009053806, 3.195710942797712, 0.9907344677658241, 1.7677953696021995, 4.040192513875558, 5.989021160263591, 3.185125482260175, 5.015518361769223], 
+        "decrad": [0.6134678269456412, 0.5317515917357662, 0.4094965332621075, 0.7686979194836849, 1.286734937500679, 0.15629229640283498, -0.291751258517685, 1.2451125601339477, -0.8007773800252125, -0.7032835121680163, -0.6615578790086926], 
+        "pmrarad": [-0.00000014830450488194445, -0.00000013628112560416666, 0.000000924685132923611, -0.0000002786224222152778, -0.00000011213740431249998, -0.00000015785533438888892, -0.000002647131177201389, -0.00000004309993620138889, 0.000000014544410416666666, -0.0000010895702656805555, 0.0000004156307683402778], 
+        "pmdecrad": [-0.000000058177641, 0.000000034712659, -0.000000706712902, -0.000000335830436, 0.000000023028649, 0.000000130560324, -0.000005929659164, 0.000000220929594, -0.00000010457431, -0.000000021962059, -0.000000468572422], 
+        "bayer": [null, null, "Alp", null, null, null, "Alp", null, null, null, "Alp"], 
+        "flam": [null, null, 13, null, null, null, 9, null, null, null, null], 
+        "con": ["Lyn", "Cnc", "Ari", "Boo", "Dra", "Tau", "CMa", "UMi", "Gru", "Cen", "CrA"], 
+        "comp": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        "comp_primary": [45408, 43960, 9861, 73034, 59341, 17628, 32263, 75310, 112594, 59120, 93819], 
+        "base": [null, null, null, null, null, null, "Gl244", null, null, null, null], 
+        "lum": [9.790390174480509, 54.35005651294466, 55.6672798150948, 3.3511973196770777, 8.693606925094164, 22.14114112091263, 22.824433121735034, 41.879356511791826, 1.004615790278395, 0.9298223905853804, 29.187708481971423], 
+        "var": [null, null, null, null, null, null, null, null, null, null, null], 
+        "var_min": [null, null, null, null, null, null, -1.333, null, 10.358, null, null], 
+        "var_max": [null, null, null, null, null, null, -1.523, null, 10.238, null, null]
+    },
+    "data_after_api":
+    {
+        "id": [45408, 43960, 9861, 73034, 59341, 17628, 32263, 75310, 112594, 59120, 93819], 
+        "hip": [45539, 44087, 9884, 73261, 59523, 17670, 32349, 75539, 112954, 59302, 94114], 
+        "hd": [79745, null, 12929, 132563, 106126, 23644, 48915, 138301, null, null, 178253], 
+        "hr": [null, null, 617, null, null, null, 2491, null, null, null, 7254], 
+        "gl": [null, null, "Gl84.3", null, null, null, "Gl244A", null, null, null, null], 
+        "bf": [null, null, "13AlpAri", null, null, null, "9AlpCMa", null, null, null, "Alp CrA"], 
+        "proper": [null, null, "Hamal", null, null, null, "Sirius", null, null, null, null], 
+        "ra": [9.281838, 8.980159, 2.119555, 14.972648, 12.206717, 3.784327, 6.752481, 15.432399, 22.876376, 12.166283, 19.157869], 
+        "dec": [35.149117, 30.467122, 23.462423, 44.043147, 73.724481, 8.954889, -16.716116, 71.339695, -45.881164, -40.295177, -37.904474], 
+        "dist": [179.2115, 465.1163, 20.1776, 96.0615, 193.0502, 133.8688, 2.6371, 240.3846, 123.3046, 109.1703, 38.4320], 
+        "mag": [8.640, 8.850, 2.010, 8.450, 8.930, 7.120, -1.440, 7.700, 10.300, 10.120, 4.110], 
+        "absmag": [2.373, 0.512, 0.486, 3.537, 2.502, 1.487, 1.454, 0.795, 4.845, 4.929, 1.187], 
+        "spect": ["F", "K", "K", "F", "F", "G", "A", "K", "G", null, "A"], 
+        "con": ["lyn", "cnc", "ari", "boo", "dra", "tau", "cma", "umi", "gru", "cen", "cra"] 
+    },
+    "catalog":
+    {
+        "tag": "hip"
+    },
+    "star":
+    {
+        "id": 93819,
+        "ra": 19.157869,
+        "dec": -37.904474,
+        "dist": 38.4320,
+        "mag": 4.110,
+        "absmag": 1.187,
+        "spect": "A",
+        "con": "cra"
+    },
+    "catalog_association":
+    {
+        "star_id": 93819,
+        "catalog_tag": "hip",
+        "identifier": "94114"
+    },
+    "constellation":
+    {
+        "tag": "cra"
+    },
+    "points":
+    [
+        {
+            "ra": 19.157869,
+            "dec": -37.904474,
+            "result": true
+        },
+        {
+            "ra": 19.167154,
+            "dec": -39.340796,
+            "result": true
+        },
+        {
+            "ra": 19.139156,
+            "dec": -40.496703,
+            "result": true
+        },
+        {
+            "ra": 18.293793,
+            "dec": -36.761686,
+            "result": false
+        },
+        {
+            "ra": 18.449561,
+            "dec": -45.968459,
+            "result": false
+        }
+    ],
+    "constellation_file":
+    {
+        "name": "cra.txt",
+        "content": [
+            "17 58 30.1113|-37.0174599|CRA \n",
+            "19 18 23.1167|-36.7785645|CRA \n",
+            "19 19 04.7136|-45.2775650|CRA \n",
+            "18 09 14.1642|-45.4859734|CRA \n",
+            "17 59 14.2281|-45.5163460|CRA \n"
+        ]
+    },
+    "is_points_range_valid":
+    {
+        "points_with_wrong_range":
+        [
+            [{
+                "ra": 25,
+                "dec": 0
+            }],
+            [{
+                "ra": -25,
+                "dec": 0
+            }],
+            [{
+                "ra": 0,
+                "dec": 91
+            }],
+            [{
+                "ra": 0,
+                "dec": -91
+            }]
+        ],
+        "points_with_right_range":
+        [
+            [{
+                "ra": 14,
+                "dec": 55
+            }]
+        ]
+    },
+    "is_polygon_contains_point": 
+    {
+        "points": 
+        [
+            {"ra": 5, "dec": -40},
+            {"ra": 12, "dec": -40},
+            {"ra": 12, "dec": 40},
+            {"ra": 1, "dec": 40}
+        ],
+        "result": [true, true, true, false, false, true, true, false, false, false, false]
+    },
+    "Graham_scan": 
+    [
+        {
+            "ra": 22.876376,
+            "dec": -45.881164
+        },
+        {
+            "ra": 15.432399,
+            "dec": 71.339695
+        },
+        {
+            "ra": 12.206717,
+            "dec": 73.724481
+        },
+        {
+            "ra": 2.119555,
+            "dec": 23.462423
+        },
+        {
+            "ra": 3.784327,
+            "dec": 8.954889
+        },
+        {
+            "ra": 6.752481,
+            "dec": -16.716116
+        },
+        {
+            "ra": 12.166283,
+            "dec": -40.295177
+        }
+    ],
+    "polygon":
+    {
+        "points_ra": [5, 12, 12, 1, 5],
+        "points_dec": [-40, -40, 40, 40, -40]
+    },
+    "get_data_with_points": 
+    {
+        "points": 
+        [
+            {"ra": 5, "dec": -40},
+            {"ra": 12, "dec": -40},
+            {"ra": 12, "dec": 40},
+            {"ra": 1, "dec": 40}
+        ],
+        "stars": 
+        [
+            {
+                "id": 45408,
+                "ra": 9.281838,
+                "dec": 35.149117,
+                "dist": 179.2115,
+                "mag": 8.640,
+                "absmag": 2.373,
+                "spect": "F",
+                "con": "lyn"
+            },
+            {
+                "id": 43960,
+                "ra": 8.980159,
+                "dec": 30.467122,
+                "dist": 465.1163,
+                "mag": 8.850,
+                "absmag": 0.512,
+                "spect": "K",
+                "con": "cnc"
+            },
+            {
+                "id": 9861,
+                "ra": 2.119555,
+                "dec": 23.462423,
+                "dist": 20.1776,
+                "mag": 2.010,
+                "absmag": 0.486,
+                "spect": "K",
+                "con": "ari"
+            },
+            {
+                "id": 17628,
+                "ra": 3.784327,
+                "dec": 8.954889,
+                "dist": 133.8688,
+                "mag": 7.120,
+                "absmag": 1.487,
+                "spect": "G",
+                "con": "tau"
+            },
+            {
+                "id": 32263,
+                "ra": 6.752481,
+                "dec": -16.716116,
+                "dist": 2.6371,
+                "mag": -1.440,
+                "absmag": 1.454,
+                "spect": "A",
+                "con": "cma"
+            }
+        ],
+        "result": "{\"catalogs\":[{\"percentage\":29.411764705882355,\"tag\":\"hip\"},{\"percentage\":23.52941176470588,\"tag\":\"hd\"},{\"percentage\":11.76470588235294,\"tag\":\"hr\"},{\"percentage\":11.76470588235294,\"tag\":\"proper\"},{\"percentage\":11.76470588235294,\"tag\":\"bf\"},{\"percentage\":11.76470588235294,\"tag\":\"gl\"}],\"constellations\":[{\"percentage\":20.0,\"tag\":\"lyn\"},{\"percentage\":20.0,\"tag\":\"cnc\"},{\"percentage\":20.0,\"tag\":\"ari\"},{\"percentage\":20.0,\"tag\":\"tau\"},{\"percentage\":20.0,\"tag\":\"cma\"}],\"number_of_stars\":5,\"spects\":[{\"percentage\":40.0,\"spect\":\"K\"},{\"percentage\":20.0,\"spect\":\"F\"},{\"percentage\":20.0,\"spect\":\"G\"},{\"percentage\":20.0,\"spect\":\"A\"}]}\n"
+    },
+    "counter_with_percentage": 
+    {
+        "data": ["proper", "proper", "proper", "hd", "hip", "hd", "gl", "gl", "hip", "gl", "hr", "proper", "hr", "bf", "hr"],
+        "result": [
+            {"tag": "proper", "percentage": 26.666666666666668},
+            {"tag": "gl", "percentage": 20.0},
+            {"tag": "hr", "percentage": 20.0},
+            {"tag": "hd", "percentage": 13.333333333333334},
+            {"tag": "hip", "percentage": 13.333333333333334},
+            {"tag": "bf", "percentage": 6.666666666666667}
+        ]
+    },
+    "get_data_from_constellation": "{\"catalogs\":[{\"percentage\":25.0,\"tag\":\"bf\"},{\"percentage\":25.0,\"tag\":\"hd\"},{\"percentage\":25.0,\"tag\":\"hip\"},{\"percentage\":25.0,\"tag\":\"hr\"}],\"constellations\":[{\"percentage\":100,\"tag\":\"cra\"}],\"number_of_stars\":1,\"spects\":[{\"percentage\":100.0,\"spect\":\"A\"}]}\n",
+    "return_name_of_star": ["HD 79745", "HIP 44087", "Hamal", "HD 132563", "HD 106126", "HD 23644", "Sirius", "HD 138301", "HIP 112954", "HIP 59302", "Alp CrA"],
+    "search_dist": 
+    [
+        {
+            "name": "Sirius", 
+            "value": 2.6371
+        }, 
+        {
+            "name": "Hamal", 
+            "value": 20.1776
+        }, 
+        {
+            "name": "Alp CrA", 
+            "value": 38.432
+        }, 
+        {
+            "name": "HD 132563", 
+            "value": 96.0615
+        }, 
+        {
+            "name": "HIP 59302", 
+            "value": 109.1703
+        }, 
+        {
+            "name": "HIP 112954", 
+            "value": 123.3046
+        }, 
+        {
+            "name": "HD 23644", 
+            "value": 133.8688
+        }, 
+        {
+            "name": "HD 79745", 
+            "value": 179.2115
+        }, 
+        {
+            "name": "HD 106126", 
+            "value": 193.0502
+        }, 
+        {
+            "name": "HD 138301", 
+            "value": 240.3846
+        }, 
+        {
+            "name": "HIP 44087", 
+            "value": 465.1163
+        }
+    ],
+    "binary_search":
+    [
+        {
+            "input":
+            {
+                "key": 100,
+                "is_minimum": false
+            },
+            "result":
+            [
+                {
+                    "name": "HD 132563", 
+                    "value": 96.0615
+                }, 
+                3
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 120,
+                "is_minimum": true  
+            },
+            "result":
+            [
+                {
+                    "name": "HIP 112954", 
+                    "value": 123.3046
+                }, 
+                5  
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 2,
+                "is_minimum": true
+            },
+            "result":
+            [
+                {
+                    "name": "Sirius", 
+                    "value": 2.6371
+                },
+                0
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 500,
+                "is_minimum": false 
+            },
+            "result": 
+            [
+                {
+                    "name": "HIP 44087", 
+                    "value": 465.1163
+                },
+                10
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 240,
+                "is_minimum": true       
+            },
+            "result":
+            [
+                {
+                    "name": "HD 138301", 
+                    "value": 240.3846
+                },
+                9
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 4,
+                "is_minimum": false
+            },
+            "result":
+            [
+                {
+                    "name": "Sirius", 
+                    "value": 2.6371
+                },
+                0
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 400,
+                "is_minimum": true 
+            },
+            "result": 
+            [
+                {
+                    "name": "HIP 44087", 
+                    "value": 465.1163
+                },
+                10
+            ]
+        },
+        {
+            "input":
+            {
+                "key": 1000,
+                "is_minimum": true 
+            },
+            "result": [null, null] 
+        },
+        {
+            "input":
+            {
+                "key": 1,
+                "is_minimum": false 
+            },
+            "result": [null, null]  
+        }
+    ],
+    "segment_search":
+    [
+        {
+            "input": 
+            {
+                "minimum": 100,
+                "maximum": 120
+            },
+            "result":
+            {
+               "minimum": 
+               {
+                    "name": "HIP 59302", 
+                    "value": 109.1703
+               },
+               "maximum":
+               {
+                    "name": "HIP 59302", 
+                    "value": 109.1703
+               },
+               "sum": 1
+            }
+        },
+        {
+            "input": 
+            {
+                "minimum": 38.3,
+                "maximum": 180.1
+            },
+            "result":
+            {
+               "minimum": 
+               {
+                   "name": "Alp CrA", 
+                   "value": 38.432
+               },
+               "maximum":
+               {
+                   "name": "HD 79745", 
+                   "value": 179.2115
+               },
+               "sum": 6
+            }
+        },
+        {
+            "input":
+            {
+                "minimum": 1,
+                "maximum": 2
+            },
+            "result":
+            {
+                "minimum": "-",
+                "maximum": "-",
+                "sum": "-"
+            }
+        },
+        {
+            "input":
+            {
+                "minimum": 500,
+                "maximum": 600
+            },
+            "result":
+            {
+                "minimum": "-",
+                "maximum": "-",
+                "sum": "-"
+            }
+        },
+        {
+            "input":
+            {
+                "minimum": 3,
+                "maximum": 19
+            },
+            "result":
+            {
+                "minimum": "-",
+                "maximum": "-",
+                "sum": "-"
+            }
+        }
+    ],
+    "sort_search":
+    [
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 1,
+                    "descending": false 
+                },
+                "last_search":
+                {
+                    "min_index": 2,
+                    "max_index": 5
+                }
+            },
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 1,
+                    "descending": true 
+                },
+                "last_search":
+                {
+                    "min_index": 4,
+                    "max_index": 7
+                }
+            },
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 1,
+                    "descending": true 
+                },
+                "last_search":
+                {
+                    "min_index": 0,
+                    "max_index": 10
+                }
+            },
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 2,
+                    "descending": true 
+                },
+                "last_search":
+                {
+                    "min_index": 0,
+                    "max_index": 10
+                }
+            },
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 3,
+                    "descending": true 
+                },
+                "last_search":
+                {
+                    "min_index": 0,
+                    "max_index": 10
+                }
+            },
+            {
+                "input":
+                {
+                    "type": "dist",
+                    "page": 3,
+                    "descending": false 
+                },
+                "last_search":
+                {
+                    "min_index": 0,
+                    "max_index": 10
+                }
+            },
+            {
+                "input": 
+                {
+                    "type": "dist",
+                    "page": 1,
+                    "descending": true
+                },
+                "last_search": {}
+            }
+    ],
+    "algorithms_search_sort_result": 
+    [
+        [
+            {
+                "name": "Alp CrA", 
+                "value": 38.432
+            }, 
+            {
+                "name": "HD 132563", 
+                "value": 96.0615
+            }, 
+            {
+                "name": "HIP 59302", 
+                "value": 109.1703
+            }, 
+            {
+                "name": "HIP 112954", 
+                "value": 123.3046
+            }
+        ],
+        [
+            {
+                "name": "HD 79745", 
+                "value": 179.2115
+            }, 
+            {
+                "name": "HD 23644", 
+                "value": 133.8688
+            }, 
+            {
+                "name": "HIP 112954", 
+                "value": 123.3046
+            }, 
+            {
+                "name": "HIP 59302", 
+                "value": 109.1703
+            }
+        ],
+        [
+            {
+                "name": "HIP 44087", 
+                "value": 465.1163
+            }, 
+            {
+                "name": "HD 138301", 
+                "value": 240.3846
+            }, 
+            {
+                "name": "HD 106126", 
+                "value": 193.0502
+            }, 
+            {
+                "name": "HD 79745", 
+                "value": 179.2115
+            }, 
+            {
+                "name": "HD 23644", 
+                "value": 133.8688
+            }, 
+            {
+                "name": "HIP 112954", 
+                "value": 123.3046
+            }, 
+            {
+                "name": "HIP 59302", 
+                "value": 109.1703
+            }, 
+            {
+                "name": "HD 132563", 
+                "value": 96.0615
+            }, 
+            {
+                "name": "Alp CrA", 
+                "value": 38.432
+            }, 
+            {
+                "name": "Hamal", 
+                "value": 20.1776
+            }
+        ],
+        [
+            {
+                "name": "Sirius", 
+                "value": 2.6371
+            }
+        ],
+        [],
+        [],
+        []
+    ],
+    "views_search_sort_result": 
+    [
+        "[{\"name\":\"Alp CrA\",\"value\":38.432},{\"name\":\"HD 132563\",\"value\":96.0615},{\"name\":\"HIP 59302\",\"value\":109.1703},{\"name\":\"HIP 112954\",\"value\":123.3046}]\n",
+        "[{\"name\":\"HD 79745\",\"value\":179.2115},{\"name\":\"HD 23644\",\"value\":133.8688},{\"name\":\"HIP 112954\",\"value\":123.3046},{\"name\":\"HIP 59302\",\"value\":109.1703}]\n",
+        "[{\"name\":\"HIP 44087\",\"value\":465.1163},{\"name\":\"HD 138301\",\"value\":240.3846},{\"name\":\"HD 106126\",\"value\":193.0502},{\"name\":\"HD 79745\",\"value\":179.2115},{\"name\":\"HD 23644\",\"value\":133.8688},{\"name\":\"HIP 112954\",\"value\":123.3046},{\"name\":\"HIP 59302\",\"value\":109.1703},{\"name\":\"HD 132563\",\"value\":96.0615},{\"name\":\"Alp CrA\",\"value\":38.432},{\"name\":\"Hamal\",\"value\":20.1776}]\n",
+        "[{\"name\":\"Sirius\",\"value\":2.6371}]\n",
+        "[]\n",
+        "[]\n",
+        "[]\n"
+    ],
+    "views_search_segment_result":
+    [
+        "{\"maximum\":{\"name\":\"HIP 59302\",\"value\":109.1703},\"minimum\":{\"name\":\"HIP 59302\",\"value\":109.1703},\"sum\":1}\n",
+        "{\"maximum\":{\"name\":\"HD 79745\",\"value\":179.2115},\"minimum\":{\"name\":\"Alp CrA\",\"value\":38.432},\"sum\":6}\n"
+    ],
+    "get_data_from_constellation_frontend": 
+    {
+        "catalogs":
+        [
+            {
+                "percentage":25,
+                "tag":"bf"
+            },
+            {
+                "percentage":25,
+                "tag":"hd"
+            },
+            {
+                "percentage":25,
+                "tag":"hip"
+            },
+            {
+                "percentage":25,
+                "tag":"hr"
+            }
+        ],
+        "constellations":
+        [
+            {
+                "percentage":100,
+                "tag":"cra"
+            }
+        ],
+        "spects":
+        [
+            {
+                "percentage":100,
+                "spect":"A"
+            }
+        ]
+    },
+    "get_data_with_points_frontend": 
+    {
+        "catalogs":
+        [
+            {
+                "percentage":29.411764705882355,
+                "tag":"hip"
+            },
+            {
+                "percentage":23.52941176470588,
+                "tag":"hd"
+            },
+            {
+                "percentage":11.76470588235294,
+                "tag":"hr"
+            },
+            {
+                "percentage":11.76470588235294,
+                "tag":"proper"
+            },
+            {
+                "percentage":11.76470588235294,
+                "tag":"bf"
+            },
+            {
+                "percentage":11.76470588235294,
+                "tag":"gl"
+            }
+        ],
+        "constellations":
+        [
+            {
+                "percentage":20,
+                "tag":"lyn"
+            },
+            {
+                "percentage":20,
+                "tag":"cnc"
+            },
+            {
+                "percentage":20,
+                "tag":"ari"
+            },
+            {
+                "percentage":20,
+                "tag":"tau"
+            },
+            {
+                "percentage":20,
+                "tag":"cma"
+            }
+        ],
+        "spects":
+        [
+            {
+                "percentage":40,
+                "spect":"K"
+            },
+            {
+                "percentage":20,
+                "spect":"F"
+            },
+            {
+                "percentage":20,
+                "spect":"G"
+            },
+            {
+                "percentage":20,
+                "spect":"A"
+            }
+        ]
+    },
+    "segment_search_frontend":
+    {
+        "distance": 
+        [
+            {
+                "input": 
+                {
+                    "minimum": 20,
+                    "maximum": 180
+                },
+                "result":
+                {
+                    "minimum": "Hamal (20.1776)",
+                    "maximum": "HD 79745 (179.2115)",
+                    "sum": 3
+                }
+            },
+            {
+                "input": 
+                {
+                    "minimum": 2,
+                    "maximum": 5
+                },
+                "result":
+                {
+                    "minimum": "Sirius (2.6371)",
+                    "maximum": "Sirius (2.6371)",
+                    "sum": 1
+                }
+            }
+        ],
+        "apparent_magnitude": 
+        [
+            {
+                "input": 
+                {
+                    "minimum": 8.5,
+                    "maximum": 8.9
+                },
+                "result":
+                {
+                    "minimum": "HD 79745 (8.64)",
+                    "maximum": "HIP 44087 (8.85)",
+                    "sum": 2
+                }
+            }
+        ],
+        "absolute_magnitude":
+        [
+            {
+                "input": 
+                {
+                    "minimum": 0,
+                    "maximum": 3
+                },
+                "result":
+                {
+                    "minimum": "Hamal (0.486)",
+                    "maximum": "HD 79745 (2.373)",
+                    "sum": 5
+                }
+            }
+        ]
+    },
+    "sort_search_frontend":
+    {
+        "points": 
+        [
+            {
+                "ra": 0,
+                "dec": 75
+            },
+            {
+                "ra": 23,
+                "dec": 75
+            },
+            {
+                "ra": 23,
+                "dec": -75
+            },
+            {
+                "ra": 0,
+                "dec": -75
+            }
+        ],
+        "input": 
+        {
+            "distance":
+            {
+                "minimum": 0,
+                "maximum": 500
+            },
+            "apparent_magnitude":
+            {
+                "minimum": -2,
+                "maximum": 11
+            },
+            "absolute_magnitude":
+            {
+                "minimum": 0,
+                "maximum": 5
+            }
+        },
+        "sort":
+        {
+            "ascending":
+            {
+                "distance": 
+                [
+                    [
+                        {"name": "Sirius", "value": 2.6371}, 
+                        {"name": "Hamal", "value": 20.1776}, 
+                        {"name": "Alp CrA", "value": 38.432}, 
+                        {"name": "HD 132563", "value": 96.0615}, 
+                        {"name": "HIP 59302", "value": 109.1703}, 
+                        {"name": "HIP 112954", "value": 123.3046}, 
+                        {"name": "HD 23644", "value": 133.8688}, 
+                        {"name": "HD 79745", "value": 179.2115}, 
+                        {"name": "HD 106126", "value": 193.0502}, 
+                        {"name": "HD 138301", "value": 240.3846}
+                    ],
+                    [
+                        {"name": "HIP 44087", "value": 465.1163}
+                    ]
+                ],
+                "apparent_magnitude": 
+                [
+                    [
+                        {"name": "Sirius", "value": -1.44}, 
+                        {"name": "Hamal", "value": 2.01},
+                        {"name": "Alp CrA", "value": 4.11}, 
+                        {"name": "HD 23644", "value": 7.12}, 
+                        {"name": "HD 138301", "value": 7.7}, 
+                        {"name": "HD 132563", "value": 8.45}, 
+                        {"name": "HD 79745", "value": 8.64}, 
+                        {"name": "HIP 44087", "value": 8.85}, 
+                        {"name": "HD 106126", "value": 8.93}, 
+                        {"name": "HIP 59302", "value": 10.12}
+                    ],
+                    [
+                        {"name": "HIP 112954", "value": 10.3}
+                    ]
+                ],
+                "absolute_magnitude": 
+                [
+                    [
+                        {"name": "Hamal", "value": 0.486}, 
+                        {"name": "HIP 44087", "value": 0.512}, 
+                        {"name": "HD 138301", "value": 0.795}, 
+                        {"name": "Alp CrA", "value": 1.187}, 
+                        {"name": "Sirius", "value": 1.454}, 
+                        {"name": "HD 23644", "value": 1.487}, 
+                        {"name": "HD 79745", "value": 2.373}, 
+                        {"name": "HD 106126", "value": 2.502}, 
+                        {"name": "HD 132563", "value": 3.537}, 
+                        {"name": "HIP 112954", "value": 4.845}
+                    ],
+                    [
+                        {"name": "HIP 59302", "value": 4.929}
+                    ]
+                ]
+            },
+            "descending":
+            {
+                "distance": 
+                [
+                    [
+                        {"name": "HIP 44087", "value": 465.1163}, 
+                        {"name": "HD 138301", "value": 240.3846}, 
+                        {"name": "HD 106126", "value": 193.0502}, 
+                        {"name": "HD 79745", "value": 179.2115}, 
+                        {"name": "HD 23644", "value": 133.8688}, 
+                        {"name": "HIP 112954", "value": 123.3046}, 
+                        {"name": "HIP 59302", "value": 109.1703}, 
+                        {"name": "HD 132563", "value": 96.0615}, 
+                        {"name": "Alp CrA", "value": 38.432}, 
+                        {"name": "Hamal", "value": 20.1776}
+                    ],
+                    [
+                        {"name": "Sirius", "value": 2.6371}
+                    ]
+                ],
+                "apparent_magnitude": 
+                [
+                    [
+                        {"name": "HIP 112954", "value": 10.3}, 
+                        {"name": "HIP 59302", "value": 10.12}, 
+                        {"name": "HD 106126", "value": 8.93}, 
+                        {"name": "HIP 44087", "value": 8.85}, 
+                        {"name": "HD 79745", "value": 8.64}, 
+                        {"name": "HD 132563", "value": 8.45}, 
+                        {"name": "HD 138301", "value": 7.7}, 
+                        {"name": "HD 23644", "value": 7.12}, 
+                        {"name": "Alp CrA", "value": 4.11}, 
+                        {"name": "Hamal", "value": 2.01}
+                    ],
+                    [
+                        {"name": "Sirius", "value": -1.44}
+                    ]
+                ],
+                "absolute_magnitude": 
+                [
+                    [
+                        {"name": "HIP 59302", "value": 4.929}, 
+                        {"name": "HIP 112954", "value": 4.845}, 
+                        {"name": "HD 132563", "value": 3.537}, 
+                        {"name": "HD 106126", "value": 2.502}, 
+                        {"name": "HD 79745", "value": 2.373}, 
+                        {"name": "HD 23644", "value": 1.487}, 
+                        {"name": "Sirius", "value": 1.454}, 
+                        {"name": "Alp CrA", "value": 1.187}, 
+                        {"name": "HD 138301", "value": 0.795}, 
+                        {"name": "HIP 44087", "value": 0.512}
+                    ],
+                    [
+                        {"name": "Hamal", "value": 0.486}
+                    ]
+                ]
+            }
+        }
+    },
+    "first_value_equals_second_value":
+    {
+        "stars":
+        [
+            [
+                {
+                    "catalog": 
+                    {
+                        "star_id": 1,
+                        "catalog_tag": "hd", 
+                        "identifier": 224728
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 2,
+                        "catalog_tag": "hip", 
+                        "identifier": 44087
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 3,
+                        "catalog_tag": "hd", 
+                        "identifier": 224774
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                }
+            ],
+            [
+                {
+                    "catalog": 
+                    {
+                        "star_id": 4,
+                        "catalog_tag": "hip", 
+                        "identifier": 1
+                    },
+                    "dist": 0,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 5,
+                        "catalog_tag": "hd", 
+                        "identifier": 224728
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 6,
+                        "catalog_tag": "hip", 
+                        "identifier": 44087
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 7,
+                        "catalog_tag": "hd", 
+                        "identifier": 224774
+                    },
+                    "dist": 100000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                },
+                {
+                    "catalog": 
+                    {
+                        "star_id": 8,
+                        "catalog_tag": "hip", 
+                        "identifier": 1000000
+                    },
+                    "dist": 10000000,
+                    "mag": 0,
+                    "absmag": 0,
+                    "ra": 0,
+                    "dec": 0
+                }
+            ]
+        ],
+        "inputs":
+        [
+            {
+                "key": 100000,
+                "is_minimum": true
+            },
+            {
+                "key": 100000,
+                "is_minimum": false
+            },
+            {
+                "key": 100000,
+                "is_minimum": true
+            },
+            {
+                "key": 100000,
+                "is_minimum": false
+            }
+        ],
+        "result":
+        [
+            [
+                {
+                    "name": "HD 224728",
+                    "value": 100000.0
+                },
+                0
+            ],
+            [
+                {
+                    "name": "HD 224774",
+                    "value": 100000.0
+                },
+                2
+            ],
+            [
+                {
+                    "name": "HD 224728",
+                    "value": 100000.0
+                },
+                1
+            ],
+            [
+                {
+                    "name": "HD 224774",
+                    "value": 100000.0
+                },
+                3
+            ]
+        ]
+    }
+}
