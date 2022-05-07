@@ -5,7 +5,7 @@ from models import db
 
 @pytest.fixture()
 def testing_app():
-    app = create_app('TESTING')
+    app = create_app("TESTING")
     db.create_all()
     yield app
 

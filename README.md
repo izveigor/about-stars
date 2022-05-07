@@ -1,4 +1,4 @@
-# About stars [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/izveigor/about-stars/blob/main/LICENSE)
+# About stars [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/izveigor/about-stars/blob/main/LICENSE) ![Tests](https://github.com/izveigor/about-stars/actions/workflows/push.yml/badge.svg)
 Flask-powered application about stars.
 ![1](https://user-images.githubusercontent.com/68601180/162478863-d5af577d-a51b-4167-93df-a80234873971.JPG)
 ![2](https://user-images.githubusercontent.com/68601180/162478864-c71c5a66-1392-4c58-ab7f-4f22d25d0a04.JPG)

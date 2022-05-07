@@ -15,7 +15,7 @@ firefox_options.headless = True
 
 @pytest.fixture()
 def browser():
-    app = create_app('TESTING')
+    app = create_app("TESTING")
     db.create_all()
 
     browser = webdriver.Firefox(options=firefox_options)

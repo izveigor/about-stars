@@ -1,0 +1,48 @@
+name: push
+on: [push]
+jobs:
+  push:
+    runs-on: [ubuntu-latest]
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: "star"
+          POSTGRES_USER: "admin"
+          POSTGRES_PASSWORD: "password"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Firefox
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install firefox
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install Tox
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install tox==3.25.0
+
+    - name: Install Geckodriver
+      run: |
+        sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
+        tar -xvzf geckodriver-v0.30.0-linux64.tar.gz
+        chmod +x geckodriver
+        sudo mv geckodriver /usr/local/bin/
+
+    - name: Lint
+      run: python3 -m tox -e lint
+
+    - name: Tests
+      run: python3 -m tox -e py38
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
