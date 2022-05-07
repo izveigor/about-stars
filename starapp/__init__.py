@@ -27,5 +27,5 @@ def create_app(config="PRODUCTION"):
     else:
         app.config[
             "SQLALCHEMY_DATABASE_URI"
-        ] = f'localhost://{POSTGRESQL_SETTINGS["POSTGRES_USER"]}:{POSTGRESQL_SETTINGS["POSTGRES_PASSWORD"]}@db:5432/{POSTGRESQL_SETTINGS["POSTGRES_DB"]}'
+        ] = f'postgresql://{POSTGRESQL_SETTINGS["POSTGRES_USER"]}:{POSTGRESQL_SETTINGS["POSTGRES_PASSWORD"]}@localhost:5432/{POSTGRESQL_SETTINGS["POSTGRES_DB"]}'
     return app
