@@ -8,9 +8,12 @@ from tests.helpers import (
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from fakeredis import FakeStrictRedis
+from unittest.mock import patch
 import time
 
 
+@patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestSort:
     def test_sort(self, browser):
         create_data_for_test()

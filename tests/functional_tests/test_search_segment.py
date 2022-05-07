@@ -6,9 +6,12 @@ from tests.helpers import (
     input_points,
 )
 from selenium.webdriver.common.keys import Keys
+from fakeredis import FakeStrictRedis
+from unittest.mock import patch
 import time
 
 
+@patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestSearchSegment:
     def test_search(self, browser):
         create_data_for_test()
