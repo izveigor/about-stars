@@ -10,12 +10,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from fakeredis import FakeStrictRedis
 from unittest.mock import patch
+from selenium import webdriver
 import time
 
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestSort:
-    def test_sort(self, browser):
+    def test_sort(self, browser: webdriver.Firefox) -> None:
         create_data_for_test()
         browser.get(LIVE_SERVER_URL)
         browser.set_window_size(1500, 600)

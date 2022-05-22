@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, jsonify, request, session
+from flask import render_template, Blueprint, Response, jsonify, request, session
 from .geometry import is_points_range_valid, is_polygon_contains_point, Graham_scan
 from models import db, Constellation, CatalogAssociation, Star
 from sqlalchemy import text
@@ -7,7 +7,8 @@ from .constants import (
     ERROR_IS_POINTS_RANGE_VALID,
     ERROR_NOT_ENOUGH_POINTS,
     ERROR_CONSTELLATION_DOES_NOT_EXIST,
-    POINT,
+    RA,
+    DEC,
     SPECT,
     CONSTELLATION,
     OTHER_DATA,
@@ -15,6 +16,7 @@ from .constants import (
     REDIS_SETTINGS,
 )
 from .algorithms import Search, TypeSearch
+from typing import Union, Any
 import string
 import random
 
@@ -22,28 +24,28 @@ import random
 bp_views = Blueprint("views", __name__)
 
 
-def get_hash():
-    alphabet = string.hexdigits[:-6]
-    random_hash = ""
+def get_hash() -> str:
+    alphabet: str = string.hexdigits[:-6]
+    random_hash: str = ""
     for i in range(64):
         random_hash += alphabet[random.randint(0, len(alphabet) - 1)]
 
     return random_hash
 
 
-@bp_views.route("/", methods=["GET"])
-def main():
+@bp_views.route("/", methods=["GET"])  # type: ignore
+def main() -> Response:
     return render_template("index.html")
 
 
-@bp_views.route("/about", methods=["GET"])
-def about():
+@bp_views.route("/about", methods=["GET"])  # type: ignore
+def about() -> Response:
     return render_template("about.html")
 
 
-@bp_views.route("/delete_all", methods=["GET"])
-def delete_all():
-    hash_ = session.get("request")
+@bp_views.route("/delete_all", methods=["GET"])  # type: ignore
+def delete_all() -> Any:
+    hash_: Union[str, None] = session.get("request")
     if hash_ is not None:
         Search.clear(hash_=hash_)
         session.pop("request")
@@ -51,9 +53,11 @@ def delete_all():
     return jsonify()
 
 
-def _result_from_stars_with_constellation_to_dict(tag):
-    star_fields = POINT + (SPECT, "id", CONSTELLATION) + OTHER_DATA
-    star_fields_str = ""
+def _result_from_stars_with_constellation_to_dict(
+    tag: str,
+) -> tuple[list[dict[str, Any]], int]:
+    star_fields: tuple[str, ...] = (RA, DEC, SPECT, "id", CONSTELLATION) + OTHER_DATA
+    star_fields_str: str = ""
     for star_field in star_fields:
         star_fields_str += star_field + ","
 
@@ -71,8 +75,8 @@ def _result_from_stars_with_constellation_to_dict(tag):
     return stars, len(stars)
 
 
-@bp_views.route("/search_constellation", methods=["POST"])
-def get_data_from_constellation():
+@bp_views.route("/search_constellation", methods=["POST"])  # type: ignore
+def get_data_from_constellation() -> Any:
     tag = request.json["tag"]
     if Constellation.query.get(tag) is not None:
         create_stars_with_constellation = text(
@@ -119,6 +123,8 @@ def get_data_from_constellation():
         hash_ = get_hash()
         session["request"] = hash_
 
+        stars: list[dict[str, Any]]
+        number_of_stars: int
         stars, number_of_stars = _result_from_stars_with_constellation_to_dict(tag)
         for type_search in TypeSearch:
             Search(hash_, type_search, stars=stars)
@@ -127,9 +133,9 @@ def get_data_from_constellation():
             {
                 "number_of_stars": number_of_stars,
                 "catalogs": sorted(
-                    catalogs, key=lambda x: x["percentage"], reverse=True
+                    catalogs, key=lambda x: x["percentage"], reverse=True  # type: ignore
                 ),
-                "spects": sorted(spects, key=lambda x: x["percentage"], reverse=True),
+                "spects": sorted(spects, key=lambda x: x["percentage"], reverse=True),  # type: ignore
                 "constellations": [{"tag": tag, "percentage": 100}],
             }
         )
@@ -141,9 +147,11 @@ def get_data_from_constellation():
         )
 
 
-def _counter_with_percentage(counter, field):
-    with_percentage = list()
-    length_counter = 0
+def _counter_with_percentage(
+    counter: Counter[str], field: str
+) -> list[dict[str, Union[str, float]]]:
+    with_percentage: list[dict[str, Union[str, float]]] = list()
+    length_counter: int = 0
     for value in counter.values():
         length_counter += value
 
@@ -157,9 +165,9 @@ def _counter_with_percentage(counter, field):
     return sorted(with_percentage, key=lambda x: x["percentage"], reverse=True)
 
 
-@bp_views.route("/search_points", methods=["POST"])
-def get_data_with_points():
-    points = request.json
+@bp_views.route("/search_points", methods=["POST"])  # type: ignore
+def get_data_with_points() -> Any:
+    points: Any = request.json
     if isinstance(points, list):
         for point in points:
             if not isinstance(point, dict):
@@ -174,12 +182,15 @@ def get_data_with_points():
         return jsonify({"error": ERROR_NOT_ENOUGH_POINTS})
 
     if is_points_range_valid(points):
-        stars = []
-        convex_polygon = Graham_scan(points)
-        spects, catalogs, constellations = (Counter() for i in range(3))
+        stars: list[dict[str, Any]] = []
+        convex_polygon: list[dict[str, float]] = Graham_scan(points)
+        spects: Counter[str]
+        catalogs: Counter[str]
+        constellations: Counter[str]
+        spects, catalogs, constellations = (Counter() for i in range(3))  # type: ignore
         for star in Star.query.all():
             if is_polygon_contains_point(points, star.ra, star.dec):
-                star_dict = vars(star)
+                star_dict: dict[str, Any] = vars(star)
                 star_dict.pop("_sa_instance_state")
                 stars.append(star_dict)
                 spects.update([star.spect])
@@ -199,7 +210,7 @@ def get_data_with_points():
             session.pop("request")
             Search.clear(hash_=old_hash)
 
-        hash_ = get_hash()
+        hash_: str = get_hash()
         session["request"] = hash_
 
         for type_search in TypeSearch:
@@ -217,30 +228,30 @@ def get_data_with_points():
         return jsonify({"error": ERROR_IS_POINTS_RANGE_VALID})
 
 
-@bp_views.route("/segment_search", methods=["POST"])
-def segment_search():
-    type_ = request.json["type"]
-    minimum = float(request.json["minimum"])
-    maximum = float(request.json["maximum"])
+@bp_views.route("/segment_search", methods=["POST"])  # type: ignore
+def segment_search() -> Any:
+    type_: Any = request.json["type"]
+    minimum: float = float(request.json["minimum"])
+    maximum: float = float(request.json["maximum"])
 
     try:
-        type_enum = TypeSearch(type_)
+        type_enum: TypeSearch = TypeSearch(type_)
     except:
         return "bad request", 400
 
-    hash_ = session.get("request")
+    hash_: Union[str, None] = session.get("request")
     if hash_ is None:
         return "bad request", 400
 
-    search_class = Search(hash_, type_enum)
+    search_class: Search = Search(hash_, type_enum)
 
     result = search_class.segment_search(minimum, maximum)
 
     return jsonify(result)
 
 
-@bp_views.route("/sort_search", methods=["POST"])
-def sort_search():
+@bp_views.route("/sort_search", methods=["POST"])  # type: ignore
+def sort_search() -> Any:
     type_ = request.json["type"]
     page = request.json["page"]
     descending = request.json["descending"]

@@ -4,3 +4,4 @@ migrations
 .coverage
 .tox
 geckodriver.log
+.mypy_cache

@@ -1,7 +1,9 @@
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from fakeredis import FakeStrictRedis
 from starapp.algorithms import Search, TypeSearch, get_value, MetaSearch
 from models import Star, CatalogAssociation
+from typing import Optional
+from flask.testing import FlaskClient
 from tests.helpers import (
     JsonData,
     create_data_for_test,
@@ -14,9 +16,9 @@ import math
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestSearch:
-    hash_ = "example_hash"
+    hash_: str = "example_hash"
 
-    def _return_search(self, hash_=None):
+    def _return_search(self, hash_: Optional[str] = None) -> Search:
         return Search(
             hash_=self.hash_ if hash_ is None else hash_,
             type_search=TypeSearch("dist"),
@@ -24,7 +26,7 @@ class TestSearch:
         )
 
     @patch("starapp.algorithms.Search.return_name_of_star")
-    def test__init__(self, mock_return_name_of_star, client):
+    def test__init__(self, mock_return_name_of_star: Mock, client: FlaskClient) -> None:
         result = JsonData.search_dist
         mock_return_name_of_star.side_effect = [data["name"] for data in result]
         create_data_for_test()
@@ -42,7 +44,7 @@ class TestSearch:
 
         Search.clear(hash_=self.hash_)
 
-    def test__del__(self, client):
+    def test__del__(self, client: FlaskClient) -> None:
         delete_hash = "delete_hash"
         create_data_for_test()
         search = self._return_search(hash_=delete_hash)
@@ -57,7 +59,7 @@ class TestSearch:
 
         assert redis_.lrange(delete_hash + ":dist", 0, length) == []
 
-    def test_return_name_of_star(self, client):
+    def test_return_name_of_star(self, client: FlaskClient) -> None:
         create_data_for_test()
         search = self._return_search()
         for id, result in zip(
@@ -65,7 +67,7 @@ class TestSearch:
         ):
             assert search.return_name_of_star(id) == result
 
-    def test_get_value(self, client):
+    def test_get_value(self, client: FlaskClient) -> None:
         create_data_for_test()
         search = self._return_search()
         testing_data = JsonData.search_dist
@@ -83,25 +85,25 @@ class TestSearch:
             )
         Search.clear(hash_=self.hash_)
 
-    def test_binary_search(self, client):
+    def test_binary_search(self, client: FlaskClient) -> None:
         create_data_for_test()
         search = self._return_search()
 
         for testing_data in JsonData.binary_search:
             result = search.binary_search(**testing_data["input"])
-            if result is not None:
-                result = list(result)
-            assert result == testing_data["result"]
+            assert list(result) == testing_data["result"]
         Search.clear(hash_=self.hash_)
 
-    def test_binary_search_if_first_value_equals_second_value(self, client):
+    def test_binary_search_if_first_value_equals_second_value(
+        self, client: FlaskClient
+    ) -> None:
         create_catalogs_for_test()
         testing_data = JsonData.first_value_equals_second_value
 
-        def create_stars(index):
+        def create_stars(index: int) -> None:
             for data in testing_data["stars"][index]:
                 catalog_association_data = data.pop("catalog")
-                star = create_star_for_test(data)
+                create_star_for_test(data)
                 create_catalog_association_for_test({**catalog_association_data})
 
         create_stars(0)
@@ -119,7 +121,7 @@ class TestSearch:
             assert testing_result == list(result)
         Search.clear(hash_=self.hash_)
 
-    def test_segment_search(self, client):
+    def test_segment_search(self, client: FlaskClient) -> None:
         create_data_for_test()
         search = self._return_search()
 
@@ -129,7 +131,7 @@ class TestSearch:
             )
         Search.clear(hash_=self.hash_)
 
-    def test_sort_search(self, client):
+    def test_sort_search(self, client: FlaskClient) -> None:
         create_data_for_test()
         search = self._return_search()
         for testing_data, testing_result in zip(
@@ -147,9 +149,9 @@ class TestSearch:
 
 
 class TestSearchMeta:
-    def test__call__(self, client):
+    def test__call__(self, client: FlaskClient) -> None:
         class ExampleClass(metaclass=MetaSearch):
-            def __init__(self, hash_, type_search: TypeSearch):
+            def __init__(self, hash_: str, type_search: TypeSearch):
                 self.hash_ = hash_
                 self.type_search = type_search
 
@@ -169,9 +171,9 @@ class TestSearchMeta:
         ExampleClass.clear(hash_="second_hash")
         del ExampleClass
 
-    def test_clear(self, client):
+    def test_clear(self, client: FlaskClient) -> None:
         class ExampleClass(metaclass=MetaSearch):
-            def __init__(self, hash_, type_search: TypeSearch):
+            def __init__(self, hash_: str, type_search: TypeSearch):
                 self.hash_ = hash_
                 self.type_search = type_search
 

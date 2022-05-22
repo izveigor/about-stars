@@ -26,7 +26,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.9'
 
     - name: Install Tox
       run: |
@@ -43,8 +43,11 @@ jobs:
     - name: Lint
       run: python3 -m tox -e lint
 
+    - name: Typing
+      run: python3 -m tox -e typing
+
     - name: Tests
-      run: python3 -m tox -e py38
+      run: python3 -m tox -e py39
       env:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432

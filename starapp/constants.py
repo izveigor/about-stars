@@ -1,4 +1,7 @@
-STELLAR_CLASSIFICATION = (
+from typing import Any
+
+
+STELLAR_CLASSIFICATION: tuple[str, ...] = (
     "O",
     "B",
     "A",
@@ -14,32 +17,32 @@ STELLAR_CLASSIFICATION = (
     "S",
 )
 
-INT_CATALOGS = (
+INT_CATALOGS: tuple[str, ...] = (
     "hr",
     "hd",
     "hip",
 )
 
-STR_CATALOGS = (
+STR_CATALOGS: tuple[str, ...] = (
     "proper",
     "bf",
     "gl",
 )
 
-CATALOGS = STR_CATALOGS + INT_CATALOGS
+CATALOGS: tuple[str, ...] = STR_CATALOGS + INT_CATALOGS
 
-POINT = ("ra", "dec")
+RA: str = "ra"
+DEC: str = "dec"
+SPECT: str = "spect"
+CONSTELLATION: str = "con"
 
-SPECT = "spect"
-CONSTELLATION = "con"
-
-OTHER_DATA = (
+OTHER_DATA: tuple[str, ...] = (
     "dist",
     "mag",
     "absmag",
 )
 
-LIST_OF_CONSTELLATIONS = (
+LIST_OF_CONSTELLATIONS: tuple[str, ...] = (
     "and",
     "ant",
     "aps",
@@ -130,28 +133,28 @@ LIST_OF_CONSTELLATIONS = (
     "vul",
 )
 
-PATH_TO_HYGDATA_V3 = "data/hygdata_v3.csv"
+PATH_TO_HYGDATA_V3: str = "data/hygdata_v3.csv"
 
-ERROR_IS_POINTS_RANGE_VALID = (
+ERROR_IS_POINTS_RANGE_VALID: str = (
     "'Dec' must be from -90 to 90, 'Ra' must be from -24 to 24!"
 )
-ERROR_CONSTELLATION_DOES_NOT_EXIST = "The constellation does not exist!"
-ERROR_NOT_ENOUGH_POINTS = "Number of points must be greater than 2!"
+ERROR_CONSTELLATION_DOES_NOT_EXIST: str = "The constellation does not exist!"
+ERROR_NOT_ENOUGH_POINTS: str = "Number of points must be greater than 2!"
 
-REDIS_SETTINGS = {
+REDIS_SETTINGS: dict[str, Any] = {
     "host": "redis",
     "port": 6379,
     "encoding": "utf-8",
     "decode_responses": True,
 }
 
-POSTGRESQL_SETTINGS = {
+POSTGRESQL_SETTINGS: dict[str, str] = {
     "POSTGRES_DB": "star",
     "POSTGRES_USER": "admin",
     "POSTGRES_PASSWORD": "password",
 }
 
-PAGINATION_SIZE = 10
-SERVER = "127.0.0.1"
-PORT = 5000
-SERVER_URL = SERVER + ":" + str(PORT)
+PAGINATION_SIZE: int = 10
+SERVER: str = "127.0.0.1"
+PORT: int = 5000
+SERVER_URL: str = SERVER + ":" + str(PORT)

@@ -6,16 +6,17 @@ from tests.helpers import (
     create_catalogs_for_test,
 )
 from models import Catalog, Constellation, Star, CatalogAssociation, db
+from flask.testing import FlaskClient
 from starapp.constants import CATALOGS
 
 
 class TestModels:
-    def test_catalogs(self, client):
+    def test_catalogs(self, client: FlaskClient) -> None:
         create_catalogs_for_test()
         for tag in CATALOGS:
             assert Catalog.query.get(tag) is not None
 
-    def test_catalog_association(self, client):
+    def test_catalog_association(self, client: FlaskClient) -> None:
         create_catalogs_for_test()
         create_star_for_test(JsonData.star)
 
@@ -37,10 +38,10 @@ class TestModels:
             testing_catalog_association, testing_data_catalog_association, "star"
         )
 
-    def test_constellation(self, client):
+    def test_constellation(self, client: FlaskClient) -> None:
         create_constellation_for_test(JsonData.constellation["tag"])
         check_model_fields(Constellation.query.all()[0], JsonData.constellation)
 
-    def test_star(self, client):
+    def test_star(self, client: FlaskClient) -> None:
         create_star_for_test(JsonData.star)
         check_model_fields(Star.query.all()[0], JsonData.star, "id")

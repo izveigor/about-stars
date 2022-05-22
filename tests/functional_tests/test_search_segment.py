@@ -8,12 +8,13 @@ from tests.helpers import (
 from selenium.webdriver.common.keys import Keys
 from fakeredis import FakeStrictRedis
 from unittest.mock import patch
+from selenium import webdriver
 import time
 
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestSearchSegment:
-    def test_search(self, browser):
+    def test_search(self, browser: webdriver.Firefox) -> None:
         create_data_for_test()
         browser.get(LIVE_SERVER_URL)
         get_element_by_id("points_search", browser).click()

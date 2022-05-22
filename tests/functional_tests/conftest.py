@@ -13,12 +13,12 @@ firefox_options = Options()
 firefox_options.headless = True
 
 
-@pytest.fixture()
-def browser():
+@pytest.fixture()  # type: ignore
+def browser() -> webdriver.Firefox:
     app = create_app("TESTING")
     db.create_all()
 
-    browser = webdriver.Firefox(options=firefox_options)
+    browser: webdriver.Firefox = webdriver.Firefox(options=firefox_options)
     s = make_server(SERVER, PORT, app)
     t = threading.Thread(target=s.serve_forever)
     t.start()

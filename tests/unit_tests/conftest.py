@@ -1,11 +1,13 @@
 import pytest
 from starapp import create_app
+from flask import Flask
+from flask.testing import FlaskClient, FlaskCliRunner
 from models import db
 
 
-@pytest.fixture()
-def testing_app():
-    app = create_app("TESTING")
+@pytest.fixture()  # type: ignore
+def testing_app() -> Flask:
+    app: Flask = create_app("TESTING")
     db.create_all()
     yield app
 
@@ -14,11 +16,11 @@ def testing_app():
         db.drop_all()
 
 
-@pytest.fixture()
-def client(testing_app):
+@pytest.fixture()  # type: ignore
+def client(testing_app: Flask) -> FlaskClient:
     return testing_app.test_client()
 
 
-@pytest.fixture()
-def runner(testing_app):
+@pytest.fixture()  # type: ignore
+def runner(testing_app: Flask) -> FlaskCliRunner:
     return testing_app.test_cli_runner()

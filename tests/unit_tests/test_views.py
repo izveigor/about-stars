@@ -1,7 +1,7 @@
 from tests.helpers import JsonData, create_data_for_test
 from models import db, Constellation
 from sqlalchemy import text
-from starapp.algorithms import Search
+from starapp.algorithms import Search, TypeSearch
 from starapp.constants import (
     ERROR_IS_POINTS_RANGE_VALID,
     ERROR_NOT_ENOUGH_POINTS,
@@ -10,24 +10,24 @@ from starapp.constants import (
 )
 import json
 from collections import Counter
+from flask.testing import FlaskClient
 from starapp.views import (
     _counter_with_percentage,
     _result_from_stars_with_constellation_to_dict,
-    TypeSearch,
     get_hash,
 )
-from unittest.mock import patch, call
+from unittest.mock import patch, call, Mock
 from flask import jsonify
 
 
 @patch("starapp.views.render_template")
 class TestMainAndAbout:
-    def test_main(self, mock_render_template, client):
+    def test_main(self, mock_render_template: Mock, client: FlaskClient) -> None:
         mock_render_template.return_value = jsonify()
         client.get("/")
         mock_render_template.assert_called_once_with("index.html")
 
-    def test_about(self, mock_render_template, client):
+    def test_about(self, mock_render_template: Mock, client: FlaskClient) -> None:
         mock_render_template.return_value = jsonify()
         client.get("/about")
         mock_render_template.assert_called_once_with("about.html")
@@ -35,7 +35,7 @@ class TestMainAndAbout:
 
 class TestDeleteAll:
     @patch("starapp.views.Search.clear")
-    def test_delete(self, mock_search_clear, client):
+    def test_delete(self, mock_search_clear: Mock, client: FlaskClient) -> None:
         random_hash = "random_hash"
         with client.session_transaction() as session:
             session["request"] = random_hash
@@ -54,11 +54,11 @@ class TestGetDataFromConstellation:
     @patch("starapp.views._result_from_stars_with_constellation_to_dict")
     def test_get(
         self,
-        mock_result_from_stars_with_constellation_to_dict,
-        mock_hash,
-        mock_search,
-        client,
-    ):
+        mock_result_from_stars_with_constellation_to_dict: Mock,
+        mock_hash: Mock,
+        mock_search: Mock,
+        client: FlaskClient,
+    ) -> None:
         create_data_for_test()
         constellation = JsonData.constellation
 
@@ -118,12 +118,12 @@ class TestGetDataFromConstellation:
     @patch("starapp.views._result_from_stars_with_constellation_to_dict")
     def test_clear_session(
         self,
-        mock_result_from_stars_with_constellation_to_dict,
-        mock_hash,
-        mock_search,
-        mock_search_clear,
-        client,
-    ):
+        mock_result_from_stars_with_constellation_to_dict: Mock,
+        mock_hash: Mock,
+        mock_search: Mock,
+        mock_search_clear: Mock,
+        client: FlaskClient,
+    ) -> None:
         create_data_for_test()
         constellation = JsonData.constellation
 
@@ -165,7 +165,9 @@ class TestGetDataFromConstellation:
         )
         db.session.commit()
 
-    def test_result_from_stars_with_constellation_to_dict(self, client):
+    def test_result_from_stars_with_constellation_to_dict(
+        self, client: FlaskClient
+    ) -> None:
         create_data_for_test()
         constellation = JsonData.constellation
         db.session.execute(
@@ -190,7 +192,7 @@ class TestGetDataFromConstellation:
         )
         db.session.commit()
 
-    def test_with_not_existing_constellation(self, client):
+    def test_with_not_existing_constellation(self, client: FlaskClient) -> None:
         create_data_for_test()
         response = client.post(
             "/search_constellation",
@@ -203,8 +205,8 @@ class TestGetDataFromConstellation:
         )
 
     @patch("starapp.views.random.randint")
-    def test_get_hash(self, mock_random_randint, client):
-        hash_ = "a0e7f02206e3a9ab50ee8994157b648fd3576d8dcca3dab8b74d68e88e1d7120"
+    def test_get_hash(self, mock_random_randint: Mock, client: FlaskClient) -> None:
+        hash_: str = "a0e7f02206e3a9ab50ee8994157b648fd3576d8dcca3dab8b74d68e88e1d7120"
         mock_random_randint.side_effect = [
             10,
             0,
@@ -277,11 +279,13 @@ class TestGetDataFromConstellation:
 class TestGetDataWithPoints:
     @patch("starapp.views.Search.__init__")
     @patch("starapp.views.get_hash")
-    def test_get(self, mock_get_hash, mock_search, client):
+    def test_get(
+        self, mock_get_hash: Mock, mock_search: Mock, client: FlaskClient
+    ) -> None:
         create_data_for_test()
         testing_data = JsonData.get_data_with_points
 
-        random_hash = "random_hash"
+        random_hash: str = "random_hash"
         mock_get_hash.return_value = random_hash
         mock_search.return_value = None
 
@@ -307,12 +311,18 @@ class TestGetDataWithPoints:
     @patch("starapp.views.Search.clear")
     @patch("starapp.views.Search.__init__")
     @patch("starapp.views.get_hash")
-    def test_clear_session(self, mock_get_hash, mock_search, mock_search_clear, client):
+    def test_clear_session(
+        self,
+        mock_get_hash: Mock,
+        mock_search: Mock,
+        mock_search_clear: Mock,
+        client: FlaskClient,
+    ) -> None:
         create_data_for_test()
         testing_data = JsonData.get_data_with_points
 
-        old_hash = "old_hash"
-        new_hash = "new_hash"
+        old_hash: str = "old_hash"
+        new_hash: str = "new_hash"
         mock_get_hash.return_value = new_hash
         mock_search.return_value = None
 
@@ -329,24 +339,26 @@ class TestGetDataWithPoints:
         with client.session_transaction() as session:
             assert session.get("request") == new_hash
 
-    def test_counter_with_percentage(self, client):
+    def test_counter_with_percentage(self, client: FlaskClient) -> None:
         testing_data = JsonData.counter_with_percentage
         result = _counter_with_percentage(Counter(testing_data["data"]), "tag")
         assert result == testing_data["result"]
 
-    def test_points_must_be_list(self, client):
+    def test_points_must_be_list(self, client: FlaskClient) -> None:
         response = client.post(
             "/search_points", data=json.dumps(43), content_type="application/json"
         )
         assert response.status_code == 400
 
-    def test_points_must_contain_dictionaries(self, client):
+    def test_points_must_contain_dictionaries(self, client: FlaskClient) -> None:
         response = client.post(
             "/search_points", data=json.dumps([15]), content_type="application/json"
         )
         assert response.status_code == 400
 
-    def test_points_must_contain_ra_and_dec_attributes(self, client):
+    def test_points_must_contain_ra_and_dec_attributes(
+        self, client: FlaskClient
+    ) -> None:
         response = client.post(
             "/search_points",
             data=json.dumps([{"ra": 15}]),
@@ -354,7 +366,7 @@ class TestGetDataWithPoints:
         )
         assert response.status_code == 400
 
-    def test_is_points_range_valid(self, client):
+    def test_is_points_range_valid(self, client: FlaskClient) -> None:
         response = client.post(
             "/search_points",
             data=json.dumps(
@@ -366,7 +378,7 @@ class TestGetDataWithPoints:
             "utf-8"
         )
 
-    def test_error_not_enough_points(self, client):
+    def test_error_not_enough_points(self, client: FlaskClient) -> None:
         response = client.post(
             "/search_points",
             data=json.dumps([{"ra": 15, "dec": 56}, {"ra": 10, "dec": -34}]),
@@ -380,7 +392,9 @@ class TestGetDataWithPoints:
 class TestSegmentSearch:
     @patch("starapp.views.Search.segment_search")
     @patch("starapp.views.Search.__init__")
-    def test_segment_search(self, mock__init__, mock_segment_search, client):
+    def test_segment_search(
+        self, mock__init__: Mock, mock_segment_search: Mock, client: FlaskClient
+    ) -> None:
         mock__init__.return_value = None
         testing_data = JsonData.segment_search
         mock_segment_search.side_effect = [
@@ -397,7 +411,7 @@ class TestSegmentSearch:
             )
             assert response.data.decode("utf-8") == result
 
-    def test_hash_is_none(self, client):
+    def test_hash_is_none(self, client: FlaskClient) -> None:
         input_ = JsonData.segment_search[0]["input"]
         response = client.post(
             "/segment_search",
@@ -406,7 +420,7 @@ class TestSegmentSearch:
         )
         assert response.status_code == 400
 
-    def test_error_type(self, client):
+    def test_error_type(self, client: FlaskClient) -> None:
         with client.session_transaction() as session:
             session["request"] = "random_hash"
 
@@ -422,7 +436,9 @@ class TestSegmentSearch:
 class TestSortSearch:
     @patch("starapp.views.Search.sort_search")
     @patch("starapp.views.Search.__init__")
-    def test_sort(self, mock__init__, mock_sort_search, client):
+    def test_sort(
+        self, mock__init__: Mock, mock_sort_search: Mock, client: FlaskClient
+    ) -> None:
         mock__init__.return_value = None
         mock_sort_search.side_effect = JsonData.algorithms_search_sort_result
         with client.session_transaction() as session:
@@ -438,7 +454,7 @@ class TestSortSearch:
             )
             assert testing_result == response.data.decode("utf-8")
 
-    def test_error_type(self, client):
+    def test_error_type(self, client: FlaskClient) -> None:
         with client.session_transaction() as session:
             session["request"] = "random_hash"
 
@@ -451,7 +467,7 @@ class TestSortSearch:
         )
         assert response.status_code == 400
 
-    def test_hash_is_none(self, client):
+    def test_hash_is_none(self, client: FlaskClient) -> None:
         input_ = JsonData.sort_search[0]["input"]
         response = client.post(
             "/sort_search", data=json.dumps(input_), content_type="application/json"

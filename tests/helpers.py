@@ -2,11 +2,11 @@ import json
 from models import db, Constellation, Catalog, CatalogAssociation, Star
 from starapp.constants import (
     CONSTELLATION,
-    POINT,
     INT_CATALOGS,
     STR_CATALOGS,
     CATALOGS,
-    POINT,
+    RA,
+    DEC,
     SPECT,
     OTHER_DATA,
 )
@@ -14,9 +14,12 @@ from starapp.constants import SERVER_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
+from selenium import webdriver
+from typing import Any, Union
 
 
-def json_decoder(data):
+def json_decoder(data: Any) -> Any:
     try:
         return json.loads(data)
     except:
@@ -33,7 +36,7 @@ class _JsonData:
 
     _file_name = "tests/data.json"
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Any:
         with open(self._file_name) as json_file:
             file_data = json_file.read()
             data = json_decoder(file_data)
@@ -47,15 +50,15 @@ class _JsonData:
 
 
 JsonData = _JsonData()
-LIVE_SERVER_URL = "http://" + SERVER_URL + "/"
+LIVE_SERVER_URL: str = "http://" + SERVER_URL + "/"
 
 
-def create_constellation_for_test(tag):
+def create_constellation_for_test(tag: str) -> None:
     db.session.add(Constellation(tag=tag))
     db.session.commit()
 
 
-def create_star_for_test(data):
+def create_star_for_test(data: dict[str, str]) -> None:
     try:
         create_constellation_for_test(tag=data[CONSTELLATION])
     except:
@@ -65,18 +68,18 @@ def create_star_for_test(data):
     db.session.commit()
 
 
-def create_catalog_association_for_test(data):
+def create_catalog_association_for_test(data: dict[str, Union[str, int]]) -> None:
     db.session.add(CatalogAssociation(**data))
     db.session.commit()
 
 
-def create_catalogs_for_test():
+def create_catalogs_for_test() -> None:
     for tag in CATALOGS:
         db.session.add(Catalog(tag=tag))
     db.session.commit()
 
 
-def create_data_for_test():
+def create_data_for_test() -> None:
     data_for_test = JsonData.data_after_api
     create_catalogs_for_test()
     for index in range(len(data_for_test[CONSTELLATION])):
@@ -86,8 +89,8 @@ def create_data_for_test():
                 "spect": data_for_test[SPECT][index],
                 "con": data_for_test[CONSTELLATION][index],
                 **{key: data_for_test[key][index] for key in OTHER_DATA},
-                "ra": data_for_test[POINT[0]][index],
-                "dec": data_for_test[POINT[1]][index],
+                "ra": data_for_test[RA][index],
+                "dec": data_for_test[DEC][index],
             }
         )
 
@@ -103,9 +106,9 @@ def create_data_for_test():
                     )
 
 
-def check_model_fields(model, data, *args):
+def check_model_fields(model: db.Model, data: dict[Any, Any], *args: str) -> None:
     """Compare fields of model and testing data from JsonData"""
-    fields = vars(model)
+    fields: dict[str, Any] = vars(model)
     fields.pop("_sa_instance_state")
 
     for delete_field in args:
@@ -115,14 +118,16 @@ def check_model_fields(model, data, *args):
         assert fields[key] == data[key]
 
 
-def get_element_by_id(id, browser):
+def get_element_by_id(id: str, browser: webdriver.Firefox) -> WebElement:
     element = WebDriverWait(browser, 5).until(
         EC.presence_of_element_located((By.ID, id))
     )
     return element
 
 
-def input_points(points, browser):
+def input_points(
+    points: list[dict[str, Union[float, int]]], browser: webdriver.Firefox
+) -> None:
     ra_input = get_element_by_id("ra_input", browser)
     dec_input = get_element_by_id("dec_input", browser)
     add_points_button = get_element_by_id("add_points_button", browser)

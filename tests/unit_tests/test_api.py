@@ -1,5 +1,5 @@
 import pandas as pd
-from unittest.mock import patch, call
+from unittest.mock import patch, call, Mock
 from tests.helpers import (
     JsonData,
     check_model_fields,
@@ -9,10 +9,12 @@ from tests.helpers import (
 )
 from starapp.api import *
 from models import Catalog, Star, CatalogAssociation, Constellation, db
+from flask.testing import FlaskClient, FlaskCliRunner
 from starapp.constants import (
     CATALOGS,
     INT_CATALOGS,
-    POINT,
+    RA,
+    DEC,
     STR_CATALOGS,
     SPECT,
     OTHER_DATA,
@@ -22,12 +24,16 @@ from starapp.constants import (
 )
 import numpy as np
 from sqlalchemy import text
+from typing import Any, Callable
+from collections.abc import Iterable
 
 
 class TestAddStar:
-    def get_data_about_star_from_hygdata(self, hygdata, index, need_constellation=True):
-        data_about_star = dict()
-        for field in OTHER_DATA + POINT:
+    def get_data_about_star_from_hygdata(
+        self, hygdata: dict[str, Any], index: int, need_constellation: bool = True
+    ) -> dict[str, Any]:
+        data_about_star: dict[str, Any] = dict()
+        for field in OTHER_DATA + (RA, DEC):
             data_about_star[field] = hygdata[field][index]
         data_about_star[SPECT] = hygdata[SPECT][index]
         data_about_star[CONSTELLATION] = (
@@ -37,7 +43,7 @@ class TestAddStar:
         return data_about_star
 
     @patch("starapp.api.get_api")
-    def test_download_stars(self, mock_get_api, runner):
+    def test_download_stars(self, mock_get_api: Mock, runner: FlaskCliRunner) -> None:
         result = runner.invoke(download_stars)
         assert (
             f'Start downloading information about stars from file "{PATH_TO_HYGDATA_V3}"'
@@ -48,7 +54,7 @@ class TestAddStar:
         )
         mock_get_api.assert_called_once()
 
-    def test_get_spect(self, client):
+    def test_get_spect(self, client: FlaskClient) -> None:
         data = pd.DataFrame.from_dict(JsonData.data_from_hygdata)
         for index, spect_data in enumerate(JsonData.data_after_api["spect"], start=0):
             assert get_spect(data.loc[index]["spect"]) == spect_data
@@ -65,23 +71,23 @@ class TestAddStar:
     @patch("starapp.api.pd.read_csv")
     def test_get_api(
         self,
-        mock_read_csv,
-        mock_create_catalogs,
-        mock_create_constellations,
-        mock_add_star,
-        mock_progressbar,
-        mock_click_echo,
-        mock_pool,
-        mock_manager,
-        client,
-    ):
+        mock_read_csv: Mock,
+        mock_create_catalogs: Mock,
+        mock_create_constellations: Mock,
+        mock_add_star: Mock,
+        mock_progressbar: Mock,
+        mock_click_echo: Mock,
+        mock_pool: Mock,
+        mock_manager: Mock,
+        client: FlaskClient,
+    ) -> None:
         data_from_hygdata = JsonData.data_from_hygdata
         testing_data = pd.DataFrame.from_dict(data_from_hygdata)
 
         mock_progressbar.return_value.__enter__.return_value = range(len(testing_data))
         mock_read_csv.return_value = pd.DataFrame.from_dict(testing_data)
 
-        def mock_pool_map(func, iterable):
+        def mock_pool_map(func: Callable[[Any], Any], iterable: Iterable[Any]) -> None:
             for element in iterable:
                 func(element)
 
@@ -152,7 +158,7 @@ class TestAddStar:
         assert CatalogAssociation.query.count() == len(testing_data_catalogs)
 
     @patch("starapp.api.click.echo")
-    def test_create_catalogs(self, mock_click_echo, client):
+    def test_create_catalogs(self, mock_click_echo: Mock, client: FlaskClient) -> None:
         create_catalogs()
 
         mock_click_echo.assert_has_calls(
@@ -168,7 +174,9 @@ class TestAddStar:
 
     @patch("starapp.api.click.echo")
     @patch("starapp.api.click.progressbar")
-    def test_add_star(self, mock_progressbar, mock_click_echo, client):
+    def test_add_star(
+        self, mock_progressbar: Mock, mock_click_echo: Mock, client: FlaskClient
+    ) -> None:
         hygdata = pd.DataFrame.from_dict(JsonData.data_from_hygdata)
         data = hygdata.replace(np.nan, None)
         testing_data = JsonData.data_after_api
@@ -181,8 +189,10 @@ class TestAddStar:
             create_constellation_for_test(tag=constellation_tag)
         create_catalogs_for_test()
 
+        stars: list[Star]
+        catalog_associations: list[CatalogAssociation]
         stars, catalog_associations = [], []
-        length_data = len(data)
+        length_data: int = len(data)
 
         for index in range(length_data):
             add_star(stars, catalog_associations, data.loc[index])
@@ -221,8 +231,11 @@ class TestAddStar:
     @patch("starapp.api.create_views_for_constellation")
     @patch("starapp.api.click.echo")
     def test_add_constellation(
-        self, mock_click_echo, mock_create_views_for_constellation, client
-    ):
+        self,
+        mock_click_echo: Mock,
+        mock_create_views_for_constellation: Mock,
+        client: FlaskClient,
+    ) -> None:
         create_constellations()
 
         mock_click_echo.assert_has_calls(
@@ -241,11 +254,11 @@ class TestAddStar:
             assert Constellation.query.get(tag) is not None
             assert constellation_model.tag == tag
 
-    def test_create_views_for_constellation(self, client):
+    def test_create_views_for_constellation(self, client: FlaskClient) -> None:
         create_star_for_test(JsonData.star)
-        constellation = JsonData.star[CONSTELLATION]
-        create_views_for_constellation([type("", (), {"tag": constellation})])
-        star_fields = POINT + (SPECT, "id", CONSTELLATION) + OTHER_DATA
+        constellation: str = JsonData.star[CONSTELLATION]
+        create_views_for_constellation([Constellation(tag=constellation)])
+        star_fields = (RA, DEC, SPECT, "id", CONSTELLATION) + OTHER_DATA
         star_fields_str = ""
         for star_field in star_fields:
             star_fields_str += star_field + ","

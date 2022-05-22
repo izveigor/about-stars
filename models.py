@@ -4,13 +4,13 @@ from starapp.constants import STELLAR_CLASSIFICATION
 db = SQLAlchemy()
 
 
-class Constellation(db.Model):
+class Constellation(db.Model):  # type: ignore
     __tablename__ = "constellation"
     tag = db.Column(db.String(3), primary_key=True)
     stars = db.relationship("Star", backref="star", lazy=True)
 
 
-class Star(db.Model):
+class Star(db.Model):  # type: ignore
     __tablename__ = "star"
     id = db.Column(db.Integer, primary_key=True)
     dist = db.Column(db.Float, nullable=False)
@@ -22,13 +22,13 @@ class Star(db.Model):
     dec = db.Column(db.Float, nullable=False)
 
 
-class Catalog(db.Model):
+class Catalog(db.Model):  # type: ignore
     __tablename__ = "catalog"
     tag = db.Column(db.String(10), primary_key=True)
     catalog_associations = db.relationship("CatalogAssociation")
 
 
-class CatalogAssociation(db.Model):
+class CatalogAssociation(db.Model):  # type: ignore
     __tablename__ = "catalog_association"
     catalog_tag = db.Column(
         db.String(10), db.ForeignKey("catalog.tag"), primary_key=True

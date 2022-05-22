@@ -3,7 +3,8 @@ from .constants import (
     CATALOGS,
     INT_CATALOGS,
     STR_CATALOGS,
-    POINT,
+    RA,
+    DEC,
     SPECT,
     OTHER_DATA,
     CONSTELLATION,
@@ -18,12 +19,13 @@ from flask import Blueprint
 from multiprocessing import Pool, Manager, cpu_count
 from functools import partial
 from sqlalchemy import text
+from typing import Union, Any
 
 
 bp_cli = Blueprint("api", __name__)
 
 
-def create_views_for_constellation(constellations):
+def create_views_for_constellation(constellations: list[Constellation]) -> None:
     for constellation in constellations:
         constellation_view = text(
             f"""
@@ -35,7 +37,7 @@ def create_views_for_constellation(constellations):
         db.session.commit()
 
 
-def get_spect(spect_from_line):
+def get_spect(spect_from_line: str) -> Union[str, None]:
     spect = None
     try:
         classification = spect_from_line[0]
@@ -49,15 +51,19 @@ def get_spect(spect_from_line):
     return spect
 
 
-def add_star(stars, catalog_associations, line):
+def add_star(
+    stars: list[Star],
+    catalog_associations: list[CatalogAssociation],
+    line: dict[str, Any],
+) -> None:
     constellation = line[CONSTELLATION]
 
     star = Star(
         id=int(line["id"]),
         **{key: line[key] for key in OTHER_DATA},
         spect=get_spect(line[SPECT]),
-        ra=line[POINT[0]],
-        dec=line[POINT[1]],
+        ra=line[RA],
+        dec=line[DEC],
         con=constellation.lower() if constellation is not None else None,
     )
 
@@ -72,7 +78,7 @@ def add_star(stars, catalog_associations, line):
                 catalog_associations.append(catalog_association)
 
 
-def create_catalogs():
+def create_catalogs() -> None:
     click.echo(f"\nStart downloading catalogs")
     for tag in CATALOGS:
         catalog_model_instance = Catalog(tag=tag)
@@ -83,7 +89,7 @@ def create_catalogs():
     click.echo("All catalogs have successfully saved in the database")
 
 
-def create_constellations():
+def create_constellations() -> None:
     click.echo(f"\nStart downloading constellations ({len(LIST_OF_CONSTELLATIONS)})")
     constellations = [Constellation(tag=tag) for tag in LIST_OF_CONSTELLATIONS]
     db.session.bulk_save_objects(constellations)
@@ -94,7 +100,7 @@ def create_constellations():
     click.echo("Constellations have successfully saved in the database")
 
 
-def get_api():
+def get_api() -> None:
     hygdata = pd.read_csv(PATH_TO_HYGDATA_V3)
     data = hygdata.replace(np.nan, None)
     create_constellations()
@@ -105,8 +111,8 @@ def get_api():
     with click.progressbar(
         range(len(data)), label="Download stars:"
     ) as stars_bar, Manager() as manager:
-        stars = manager.list()
-        catalog_associations = manager.list()
+        stars: list[Star] = manager.list()
+        catalog_associations: list[CatalogAssociation] = manager.list()
 
         with Pool(cpu_count() - 1) as pool:
             pool.map(
@@ -124,8 +130,8 @@ def get_api():
         click.echo("Stars have successfully saved in the database")
 
 
-@bp_cli.cli.command("download_stars")
-def download_stars():
+@bp_cli.cli.command("download_stars")  # type: ignore
+def download_stars() -> None:
     click.echo(
         f'Start downloading information about stars from file "{PATH_TO_HYGDATA_V3}"'
     )

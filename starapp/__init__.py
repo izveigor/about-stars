@@ -7,7 +7,7 @@ from .constants import SERVER_URL, SERVER, POSTGRESQL_SETTINGS
 from flask_cors import CORS
 
 
-def create_app(config="PRODUCTION"):
+def create_app(config: str = "PRODUCTION") -> Flask:
     app = Flask(__name__)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = "secret!"

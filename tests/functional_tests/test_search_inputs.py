@@ -16,10 +16,14 @@ from sqlalchemy import text
 from unittest.mock import patch
 from fakeredis import FakeStrictRedis
 from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
+from typing import Any
 import pytest
 
 
-def check_fields_search_statistics(testing_data, browser):
+def check_fields_search_statistics(
+    testing_data: Any, browser: webdriver.Firefox
+) -> None:
     for type_of_data in ("catalogs", "constellations", "spects"):
         table = get_element_by_id(type_of_data, browser)
         for row, testing_row in zip(
@@ -35,7 +39,7 @@ def check_fields_search_statistics(testing_data, browser):
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)
 class TestInputs:
-    def test_change(self, browser):
+    def test_change(self, browser: webdriver.Firefox) -> None:
         CONSTELLATION_SEARCH_TITLE = "Search with constellation:"
         CONSTELLATION_SEARCH_DESCRIPTION = "Input tag of constellation (for example ori (Orion)) and we will see the statistics about this constellation!"
         POINTS_SEARCH_TITLE = "Search with points:"
@@ -88,7 +92,7 @@ class TestInputs:
             == CONSTELLATION_SEARCH_DESCRIPTION
         )
 
-    def test_search_constellation(self, browser):
+    def test_search_constellation(self, browser: webdriver.Firefox) -> None:
         create_data_for_test()
         tag = JsonData.constellation["tag"]
         testing_data = JsonData.get_data_from_constellation_frontend
@@ -130,7 +134,7 @@ class TestInputs:
         )
         db.session.commit()
 
-    def test_input_points(self, browser):
+    def test_input_points(self, browser: webdriver.Firefox) -> None:
         create_data_for_test()
         browser.get(LIVE_SERVER_URL)
         get_element_by_id("points_search", browser).click()
@@ -186,7 +190,7 @@ class TestInputs:
         testing_data = JsonData.get_data_with_points_frontend
         check_fields_search_statistics(testing_data, browser)
 
-    def test_with_not_existing_constellation(self, browser):
+    def test_with_not_existing_constellation(self, browser: webdriver.Firefox) -> None:
         create_data_for_test()
         browser.get(LIVE_SERVER_URL)
 
@@ -198,22 +202,22 @@ class TestInputs:
             == ERROR_CONSTELLATION_DOES_NOT_EXIST
         )
 
-    def test_is_points_range_valid(self, browser):
+    def test_is_points_range_valid(self, browser: webdriver.Firefox) -> None:
         browser.get(LIVE_SERVER_URL)
         get_element_by_id("points_search", browser).click()
 
         points = [{"ra": 33, "dec": 56}, {"ra": 15, "dec": 56}, {"ra": 15, "dec": 56}]
-        input_points(points, browser)
+        input_points(points, browser)  # type: ignore
         get_element_by_id("search_points_button", browser).click()
 
         assert get_element_by_id("error", browser).text == ERROR_IS_POINTS_RANGE_VALID
 
-    def test_error_not_enough_points(self, browser):
+    def test_error_not_enough_points(self, browser: webdriver.Firefox) -> None:
         browser.get(LIVE_SERVER_URL)
         get_element_by_id("points_search", browser).click()
 
         points = [{"ra": 15, "dec": 56}, {"ra": 10, "dec": -34}]
-        input_points(points, browser)
+        input_points(points, browser)  # type: ignore
         get_element_by_id("search_points_button", browser).click()
 
         assert get_element_by_id("error", browser).text == ERROR_NOT_ENOUGH_POINTS
