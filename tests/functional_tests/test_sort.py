@@ -50,7 +50,8 @@ class TestSort:
                 )
                 time.sleep(1)
                 get_element_by_id(name, browser).click()
-
+            
+            time.sleep(1)
             minimum_input.send_keys(Keys.BACKSPACE, input_["minimum"])
             maximum_input.send_keys(Keys.BACKSPACE, input_["maximum"], Keys.TAB)
 
