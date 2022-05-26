@@ -105,15 +105,15 @@ jobs:
         id: cache-typing
         env:
             cache-name: cache-typing
-          with:
-            path: |
-              .tox/typing/**
-              !.tox/typing/log/**
-            key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.tox/typing/**') }}
-            restore-keys: |
-              ${{ runner.os }}-build-${{ env.cache-name }}-
-              ${{ runner.os }}-build-
-              ${{ runner.os }}-
+        with:
+          path: |
+            .tox/typing/**
+            !.tox/typing/log/**
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.tox/typing/**') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       - name: Typing
         run: python3 -m tox -e typing
