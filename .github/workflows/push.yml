@@ -15,39 +15,126 @@ jobs:
           - 5432:5432
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Install Firefox
-      run: |
-        sudo apt-get -y update
-        sudo apt-get -y install firefox
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+           python-version: '3.9'
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+      - name: Cache Tox (pip)
+        uses: actions/cache@v2
+        id: cache-tox
+        env:
+          cache-name: cache-pip-tox
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Install Tox
-      run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install tox==3.25.0
+      - name: Install Tox
+        if: ${{ steps.cache-tox.outputs.cache-hit == false }}
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install tox==3.25.0
 
-    - name: Install Geckodriver
-      run: |
-        sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
-        tar -xvzf geckodriver-v0.30.0-linux64.tar.gz
-        chmod +x geckodriver
-        sudo mv geckodriver /usr/local/bin/
+      - name: Cache Firefox
+        uses: actions/cache@v2
+        id: cache-firefox
+        env:
+          cache-name: cache-firefox
+        with:
+          path: /usr/local/bin/firefox
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-firefox
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Lint
-      run: python3 -m tox -e lint
+      - name: Install Firefox
+        if: ${{ steps.cache-firefox.outputs.cache-hit == false }}
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install firefox
 
-    - name: Typing
-      run: python3 -m tox -e typing
+      - name: Cache Geckodriver
+        uses: actions/cache@v2
+        id: cache-geckodriver
+        env:
+          cache-name: cache-geckodriver
+        with:
+          path: /usr/local/bin/geckodriver
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-geckodriver
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Tests
-      run: python3 -m tox -e py39
-      env:
-        POSTGRES_HOST: localhost
-        POSTGRES_PORT: 5432
+      - name: Install Geckodriver
+        if: ${{ steps.cache-geckodriver.outputs.cache-hit == false }}
+        run: |
+          sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
+          tar -xvzf geckodriver-v0.30.0-linux64.tar.gz
+          chmod +x geckodriver
+          sudo mv geckodriver /usr/local/bin/
+
+      - name: Cache lint
+        uses: actions/cache@v2
+        id: cache-lint
+        env:
+          cache-name: cache-lint
+        with:
+          path: |
+            .tox/lint/**
+            !.tox/lint/log/**
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.tox/lint/**') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Lint
+        run: python3 -m tox -e lint
+
+      - name: Cache typing
+        uses: actions/cache@v2
+        id: cache-typing
+        env:
+            cache-name: cache-typing
+          with:
+            path: |
+              .tox/typing/**
+              !.tox/typing/log/**
+            key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.tox/typing/**') }}
+            restore-keys: |
+              ${{ runner.os }}-build-${{ env.cache-name }}-
+              ${{ runner.os }}-build-
+              ${{ runner.os }}-
+
+      - name: Typing
+        run: python3 -m tox -e typing
+
+      - name: Cache tests
+        uses: actions/cache@v2
+        id: cache-tests
+        env:
+          cache-name: cache-tests
+        with:
+          path: |
+            .tox/py39/**
+            !.tox/typing/log/**
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.tox/py39/**') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Tests
+        run: python3 -m tox -e py39
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432

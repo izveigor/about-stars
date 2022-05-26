@@ -5,3 +5,4 @@ migrations
 .tox
 geckodriver.log
 .mypy_cache
+tmp
