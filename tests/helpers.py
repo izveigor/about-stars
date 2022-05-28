@@ -1,22 +1,24 @@
 import json
-from models import db, Constellation, Catalog, CatalogAssociation, Star
-from starapp.constants import (
-    CONSTELLATION,
-    INT_CATALOGS,
-    STR_CATALOGS,
-    CATALOGS,
-    RA,
-    DEC,
-    SPECT,
-    OTHER_DATA,
-)
-from starapp.constants import SERVER_URL
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.remote.webelement import WebElement
-from selenium import webdriver
 from typing import Any, Union
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+from models import Catalog, CatalogAssociation, Constellation, Star, db
+from starapp.constants import (
+    CATALOGS,
+    CONSTELLATION,
+    DEC,
+    INT_CATALOGS,
+    OTHER_DATA,
+    RA,
+    SERVER_URL,
+    SPECT,
+    STR_CATALOGS,
+)
 
 
 def json_decoder(data: Any) -> Any:

@@ -1,26 +1,28 @@
+from functools import partial
+from multiprocessing import Manager, Pool, cpu_count
+from typing import Any, Union
+
+import click
+import numpy as np
 import pandas as pd
+from flask import Blueprint
+from sqlalchemy import text
+
+from models import Catalog, CatalogAssociation, Constellation, Star, db
+
 from .constants import (
     CATALOGS,
-    INT_CATALOGS,
-    STR_CATALOGS,
-    RA,
-    DEC,
-    SPECT,
-    OTHER_DATA,
     CONSTELLATION,
-    STELLAR_CLASSIFICATION,
-    PATH_TO_HYGDATA_V3,
+    DEC,
+    INT_CATALOGS,
     LIST_OF_CONSTELLATIONS,
+    OTHER_DATA,
+    PATH_TO_HYGDATA_V3,
+    RA,
+    SPECT,
+    STELLAR_CLASSIFICATION,
+    STR_CATALOGS,
 )
-from models import Catalog, CatalogAssociation, Constellation, Star, db
-import numpy as np
-import click
-from flask import Blueprint
-from multiprocessing import Pool, Manager, cpu_count
-from functools import partial
-from sqlalchemy import text
-from typing import Union, Any
-
 
 bp_cli = Blueprint("api", __name__)
 

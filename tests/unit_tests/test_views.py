@@ -1,23 +1,25 @@
-from tests.helpers import JsonData, create_data_for_test
-from models import db, Constellation
-from sqlalchemy import text
-from starapp.algorithms import Search, TypeSearch
-from starapp.constants import (
-    ERROR_IS_POINTS_RANGE_VALID,
-    ERROR_NOT_ENOUGH_POINTS,
-    ERROR_CONSTELLATION_DOES_NOT_EXIST,
-    REDIS_SETTINGS,
-)
 import json
 from collections import Counter
+from unittest.mock import Mock, call, patch
+
+from flask import jsonify
 from flask.testing import FlaskClient
+from sqlalchemy import text
+
+from models import Constellation, db
+from starapp.algorithms import Search, TypeSearch
+from starapp.constants import (
+    ERROR_CONSTELLATION_DOES_NOT_EXIST,
+    ERROR_IS_POINTS_RANGE_VALID,
+    ERROR_NOT_ENOUGH_POINTS,
+    REDIS_SETTINGS,
+)
 from starapp.views import (
     _counter_with_percentage,
     _result_from_stars_with_constellation_to_dict,
     get_hash,
 )
-from unittest.mock import patch, call, Mock
-from flask import jsonify
+from tests.helpers import JsonData, create_data_for_test
 
 
 @patch("starapp.views.render_template")

@@ -1,15 +1,17 @@
+import time
+from unittest.mock import patch
+
+from fakeredis import FakeStrictRedis
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
 from tests.helpers import (
     LIVE_SERVER_URL,
-    get_element_by_id,
-    create_data_for_test,
     JsonData,
+    create_data_for_test,
+    get_element_by_id,
     input_points,
 )
-from selenium.webdriver.common.keys import Keys
-from fakeredis import FakeStrictRedis
-from unittest.mock import patch
-from selenium import webdriver
-import time
 
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)

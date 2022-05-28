@@ -1,25 +1,27 @@
-from flask import render_template, Blueprint, Response, jsonify, request, session
-from .geometry import is_points_range_valid, is_polygon_contains_point, Graham_scan
-from models import db, Constellation, CatalogAssociation, Star
-from sqlalchemy import text
+import random
+import string
 from collections import Counter
+from typing import Any, Union
+
+from flask import Blueprint, Response, jsonify, render_template, request, session
+from sqlalchemy import text
+
+from models import CatalogAssociation, Constellation, Star, db
+
+from .algorithms import Search, TypeSearch
 from .constants import (
+    CATALOGS,
+    CONSTELLATION,
+    DEC,
+    ERROR_CONSTELLATION_DOES_NOT_EXIST,
     ERROR_IS_POINTS_RANGE_VALID,
     ERROR_NOT_ENOUGH_POINTS,
-    ERROR_CONSTELLATION_DOES_NOT_EXIST,
-    RA,
-    DEC,
-    SPECT,
-    CONSTELLATION,
     OTHER_DATA,
-    CATALOGS,
+    RA,
     REDIS_SETTINGS,
+    SPECT,
 )
-from .algorithms import Search, TypeSearch
-from typing import Union, Any
-import string
-import random
-
+from .geometry import Graham_scan, is_points_range_valid, is_polygon_contains_point
 
 bp_views = Blueprint("views", __name__)
 

@@ -1,9 +1,10 @@
+from flask.testing import FlaskClient
+
 from starapp.geometry import (
+    Graham_scan,
     is_points_range_valid,
     is_polygon_contains_point,
-    Graham_scan,
 )
-from flask.testing import FlaskClient
 from tests.helpers import JsonData
 
 

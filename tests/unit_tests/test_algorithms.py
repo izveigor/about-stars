@@ -1,17 +1,19 @@
-from unittest.mock import patch, Mock
-from fakeredis import FakeStrictRedis
-from starapp.algorithms import Search, TypeSearch, get_value, MetaSearch
-from models import Star, CatalogAssociation
+import math
 from typing import Optional
+from unittest.mock import Mock, patch
+
+from fakeredis import FakeStrictRedis
 from flask.testing import FlaskClient
+
+from models import CatalogAssociation, Star
+from starapp.algorithms import MetaSearch, Search, TypeSearch, get_value
 from tests.helpers import (
     JsonData,
-    create_data_for_test,
     create_catalog_association_for_test,
-    create_star_for_test,
     create_catalogs_for_test,
+    create_data_for_test,
+    create_star_for_test,
 )
-import math
 
 
 @patch("starapp.algorithms.redis.StrictRedis", FakeStrictRedis)

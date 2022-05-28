@@ -1,13 +1,13 @@
-import pytest
-from starapp import create_app
-from models import db
-from selenium.webdriver.firefox.options import Options
-from selenium import webdriver
-from starapp import create_app
 import threading
-from werkzeug.serving import make_server
-from starapp.constants import SERVER, PORT
 
+import pytest
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from werkzeug.serving import make_server
+
+from models import db
+from starapp import create_app
+from starapp.constants import PORT, SERVER
 
 firefox_options = Options()
 firefox_options.headless = True

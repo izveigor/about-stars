@@ -1,31 +1,33 @@
+from collections.abc import Iterable
+from typing import Any, Callable
+from unittest.mock import Mock, call, patch
+
+import numpy as np
 import pandas as pd
-from unittest.mock import patch, call, Mock
+from flask.testing import FlaskClient, FlaskCliRunner
+from sqlalchemy import text
+
+from models import Catalog, CatalogAssociation, Constellation, Star, db
+from starapp.api import *
+from starapp.constants import (
+    CATALOGS,
+    CONSTELLATION,
+    DEC,
+    INT_CATALOGS,
+    LIST_OF_CONSTELLATIONS,
+    OTHER_DATA,
+    PATH_TO_HYGDATA_V3,
+    RA,
+    SPECT,
+    STR_CATALOGS,
+)
 from tests.helpers import (
     JsonData,
     check_model_fields,
+    create_catalogs_for_test,
     create_constellation_for_test,
     create_star_for_test,
-    create_catalogs_for_test,
 )
-from starapp.api import *
-from models import Catalog, Star, CatalogAssociation, Constellation, db
-from flask.testing import FlaskClient, FlaskCliRunner
-from starapp.constants import (
-    CATALOGS,
-    INT_CATALOGS,
-    RA,
-    DEC,
-    STR_CATALOGS,
-    SPECT,
-    OTHER_DATA,
-    PATH_TO_HYGDATA_V3,
-    CONSTELLATION,
-    LIST_OF_CONSTELLATIONS,
-)
-import numpy as np
-from sqlalchemy import text
-from typing import Any, Callable
-from collections.abc import Iterable
 
 
 class TestAddStar:

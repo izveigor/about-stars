@@ -1,8 +1,9 @@
 import pytest
-from starapp import create_app
 from flask import Flask
 from flask.testing import FlaskClient, FlaskCliRunner
+
 from models import db
+from starapp import create_app
 
 
 @pytest.fixture()  # type: ignore

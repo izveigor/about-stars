@@ -1,10 +1,12 @@
 from flask import Flask
-from models import db
-from .api import bp_cli
-from .views import bp_views
-from flask_migrate import Migrate
-from .constants import SERVER_URL, SERVER, POSTGRESQL_SETTINGS
 from flask_cors import CORS
+from flask_migrate import Migrate
+
+from models import db
+
+from .api import bp_cli
+from .constants import POSTGRESQL_SETTINGS, SERVER, SERVER_URL
+from .views import bp_views
 
 
 def create_app(config: str = "PRODUCTION") -> Flask:

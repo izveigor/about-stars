@@ -1,24 +1,26 @@
-from tests.helpers import (
-    LIVE_SERVER_URL,
-    get_element_by_id,
-    create_data_for_test,
-    input_points,
-    JsonData,
-)
+from typing import Any
+from unittest.mock import patch
+
+import pytest
+from fakeredis import FakeStrictRedis
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from sqlalchemy import text
+
+from models import db
 from starapp.constants import (
-    ERROR_IS_POINTS_RANGE_VALID,
     ERROR_CONSTELLATION_DOES_NOT_EXIST,
+    ERROR_IS_POINTS_RANGE_VALID,
     ERROR_NOT_ENOUGH_POINTS,
 )
-from selenium.webdriver.common.by import By
-from models import db
-from sqlalchemy import text
-from unittest.mock import patch
-from fakeredis import FakeStrictRedis
-from selenium.common.exceptions import TimeoutException
-from selenium import webdriver
-from typing import Any
-import pytest
+from tests.helpers import (
+    LIVE_SERVER_URL,
+    JsonData,
+    create_data_for_test,
+    get_element_by_id,
+    input_points,
+)
 
 
 def check_fields_search_statistics(

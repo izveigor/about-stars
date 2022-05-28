@@ -1,8 +1,11 @@
-import redis
 from enum import Enum
-from .constants import CATALOGS, STR_CATALOGS, REDIS_SETTINGS, PAGINATION_SIZE
+from typing import Any, Optional, TypedDict, Union
+
+import redis
+
 from models import CatalogAssociation
-from typing import Union, Any, TypedDict, Optional
+
+from .constants import CATALOGS, PAGINATION_SIZE, REDIS_SETTINGS, STR_CATALOGS
 
 
 class TypeSearch(Enum):

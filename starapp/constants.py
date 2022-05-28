@@ -1,6 +1,5 @@
 from typing import Any
 
-
 STELLAR_CLASSIFICATION: tuple[str, ...] = (
     "O",
     "B",

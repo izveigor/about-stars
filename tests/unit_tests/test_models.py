@@ -1,13 +1,14 @@
+from flask.testing import FlaskClient
+
+from models import Catalog, CatalogAssociation, Constellation, Star, db
+from starapp.constants import CATALOGS
 from tests.helpers import (
     JsonData,
     check_model_fields,
+    create_catalogs_for_test,
     create_constellation_for_test,
     create_star_for_test,
-    create_catalogs_for_test,
 )
-from models import Catalog, Constellation, Star, CatalogAssociation, db
-from flask.testing import FlaskClient
-from starapp.constants import CATALOGS
 
 
 class TestModels:

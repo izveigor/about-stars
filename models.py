@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+
 from starapp.constants import STELLAR_CLASSIFICATION
 
 db = SQLAlchemy()
