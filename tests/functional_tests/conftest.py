@@ -5,9 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from werkzeug.serving import make_server
 
-from models import db
 from starapp import create_app
 from starapp.constants import PORT, SERVER
+
+from models import db  # isort:skip
 
 firefox_options = Options()
 firefox_options.headless = True
