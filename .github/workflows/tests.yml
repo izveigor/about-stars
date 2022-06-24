@@ -17,7 +17,7 @@ jobs:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: password
         ports:
-          - ${{ secrets.POSTGRES_PORT }}:${{ secrets.POSTGRES_PORT }}
+          - 5432:5432
 
     steps:
       - name: Checkout
