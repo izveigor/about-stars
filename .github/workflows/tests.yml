@@ -11,7 +11,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_DB: star
           POSTGRES_USER: admin
@@ -144,7 +144,7 @@ jobs:
       - name: Tests
         run: python3 -m tox -e py39
         env:
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_DB: star
           POSTGRES_USER: admin
