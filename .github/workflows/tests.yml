@@ -11,11 +11,11 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: star
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password
         ports:
           - ${{ secrets.POSTGRES_PORT }}:${{ secrets.POSTGRES_PORT }}
 
@@ -144,8 +144,8 @@ jobs:
       - name: Tests
         run: python3 -m tox -e py39
         env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: star
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password
