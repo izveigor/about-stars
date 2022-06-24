@@ -1,0 +1,8 @@
+__pycache__
+*pyc
+geckodriver.log
+.coverage
+.tox
+.mypy_cache
+.github
+tmp

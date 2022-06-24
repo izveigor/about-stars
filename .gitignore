@@ -1,8 +1,10 @@
 __pycache__
 .pytest_cache
+*pyc
 migrations
 .coverage
 .tox
 geckodriver.log
 .mypy_cache
 tmp
+.python-version

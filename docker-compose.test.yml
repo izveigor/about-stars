@@ -4,10 +4,11 @@ version: '3'
 services:
 
   web:
-    build: ./src
-    restart: always
-    container_name: about_stars_development_web
-    command: python3 -m flask run --host=0.0.0.0
+    build:
+      context: ./src
+      dockerfile: Dockerfile.test
+    container_name: about_stars_test_web
+    command: python3 -m tox -vv -p 3
     volumes:
       - .:/code
     environment:
@@ -21,36 +22,22 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '6'
+          cpus: '3'
     networks:
-      - flask-development
+      - flask-test
     depends_on:
       - db
-      - redis
-  
-  redis:
-    image: redis
-    restart: always
-    container_name: about_stars_development_redis
-    env_file:
-      - ./config/.env.prod.redis
-    networks:
-      - flask-development
-    ports:
-      - 6379:6379
-  
+
   db:
     image: postgres:14
     restart: always
-    container_name: about_stars_development_db
+    container_name: about_stars_test_db
     env_file:
       - ./config/.env.prod.db
     volumes:
       - data:/var/lib/postgresql/data
-    env_file:
-      - ./config/.env.prod.db
     networks:
-      - flask-development
+      - flask-test
     ports:
       - 5432:5432
 
@@ -60,4 +47,4 @@ volumes:
 
 
 networks:
-  flask-development:
+  flask-test:

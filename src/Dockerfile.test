@@ -1,0 +1,18 @@
+FROM python:3.9
+WORKDIR /usr/src/test
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN pip install --upgrade pip
+RUN pip install tox==3.25.0
+
+RUN apt-get -y update && apt-get install -y --no-install-recommends ca-certificates curl firefox-esr
+
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
+RUN tar -xvzf geckodriver-v0.30.0-linux64.tar.gz
+RUN chmod +x geckodriver
+RUN mv geckodriver /usr/local/bin/
+
+COPY . .
+RUN mv static starapp

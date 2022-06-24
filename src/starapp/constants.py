@@ -1,4 +1,5 @@
-from typing import Any
+import os
+from typing import Any, Optional
 
 STELLAR_CLASSIFICATION: tuple[str, ...] = (
     "O",
@@ -141,19 +142,21 @@ ERROR_CONSTELLATION_DOES_NOT_EXIST: str = "The constellation does not exist!"
 ERROR_NOT_ENOUGH_POINTS: str = "Number of points must be greater than 2!"
 
 REDIS_SETTINGS: dict[str, Any] = {
-    "host": "redis",
-    "port": 6379,
+    "host": os.environ.get("REDIS_HOST"),
+    "port": os.environ.get("REDIS_PORT"),
     "encoding": "utf-8",
     "decode_responses": True,
 }
 
-POSTGRESQL_SETTINGS: dict[str, str] = {
-    "POSTGRES_DB": "star",
-    "POSTGRES_USER": "admin",
-    "POSTGRES_PASSWORD": "password",
+POSTGRESQL_SETTINGS: dict[str, Optional[str]] = {
+    "POSTGRES_HOST": os.environ.get("POSTGRES_HOST"),
+    "POSTGRES_PORT": os.environ.get("POSTGRES_PORT"),
+    "POSTGRES_DB": os.environ.get("POSTGRES_DB"),
+    "POSTGRES_USER": os.environ.get("POSTGRES_USER"),
+    "POSTGRES_PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
 }
 
 PAGINATION_SIZE: int = 10
-SERVER: str = "127.0.0.1"
-PORT: int = 5000
+SERVER: str = os.environ.get("HOST", "")
+PORT: int = int(os.environ.get("PORT", 0))
 SERVER_URL: str = SERVER + ":" + str(PORT)

@@ -4,12 +4,14 @@ version: '3'
 services:
 
   web:
-    build: ./src
+    build:
+      context: ./src
+      dockerfile: Dockerfile.prod
     restart: always
-    container_name: about_stars_development_web
-    command: python3 -m flask run --host=0.0.0.0
+    container_name: about_stars_production_web
+    command: gunicorn --bind 0.0.0.0:5000 "starapp.__init__:create_app()"
     volumes:
-      - .:/code
+      - static_volumes:/home/app/web/static
     environment:
       - FLASK_APP=./starapp/__init__.py
     env_file:
@@ -23,7 +25,9 @@ services:
         limits:
           cpus: '6'
     networks:
-      - flask-development
+      flask-production:
+        aliases:
+          - flask-app
     depends_on:
       - db
       - redis
@@ -31,33 +35,45 @@ services:
   redis:
     image: redis
     restart: always
-    container_name: about_stars_development_redis
+    container_name: about_stars_production_redis
     env_file:
       - ./config/.env.prod.redis
     networks:
-      - flask-development
+      - flask-production
     ports:
       - 6379:6379
   
   db:
     image: postgres:14
     restart: always
-    container_name: about_stars_development_db
+    container_name: about_stars_production_db
     env_file:
       - ./config/.env.prod.db
     volumes:
       - data:/var/lib/postgresql/data
-    env_file:
-      - ./config/.env.prod.db
     networks:
-      - flask-development
+      - flask-production
     ports:
       - 5432:5432
+  
+  nginx:
+    build: ./server
+    restart: always
+    container_name: about_stars_production_nginx
+    volumes:
+      - static_volumes:/home/app/web/static
+    ports:
+      - 1337:80
+    networks:
+      - flask-production
+    depends_on:
+      - web
 
 
 volumes:
   data:
+  static_volumes:
 
 
 networks:
-  flask-development:
+  flask-production:
