@@ -11,7 +11,9 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: "star"
+          POSTGRES_USER: "admin"
+          POSTGRES_PASSWORD: "password"
         ports:
           - 5432:5432
 
@@ -145,6 +147,3 @@ jobs:
         env:
           POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
-          POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
