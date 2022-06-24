@@ -8,10 +8,10 @@ Flask-powered application about stars.
 ## How to use
 You can start the application with docker-compose:
 ```
-$ docker-compose up
+$ docker-compose -f docker-compose.prod.yml up --build
 ```
 Application takes information from file ("data/hygdata_v3.csv").
-It downloads data from that file with special command ("flask api download_stars"). After that, user visit site 127.0.0.1:5000.
+It downloads data from that file with special command ("flask api download_stars"). After that, user visit site localhost:1337.
 User has two options to input data for searching stars:
 1. Input tag of a constellation
 2. Input points
